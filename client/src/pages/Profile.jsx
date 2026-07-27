@@ -12,102 +12,104 @@ import {
   ShieldCheck,
   Users,
   HandHeart,
-  Activity,
 } from "lucide-react";
 
 import "./Profile.css";
+
 const API = import.meta.env.VITE_API_URL;
+
 function Profile() {
   const { authUser, profile } = useAuth();
 
   const [stats, setStats] = useState({
-  requests: 0,
-  acceptedRequests: 0,
-  isDonor: false,
-});
+    requests: 0,
+    acceptedRequests: 0,
+    isDonor: false,
+  });
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!profile?.id) return;
+    if (!profile) return;
+
+    console.log("Supabase Auth ID:", authUser?.id);
+    console.log("Database User ID:", profile?.id);
 
     const loadProfile = async () => {
       try {
-        const res = await axios.get(
-  `${API}/api/profile/${profile.id}`
-);
+        const { data } = await axios.get(
+          `${API}/api/profile/${profile.id}`
+        );
 
         setStats({
-  requests: res.data.requests || 0,
-  acceptedRequests: res.data.acceptedRequests || 0,
-  isDonor: res.data.isDonor || false,
-});
+          requests: data.requests || 0,
+          acceptedRequests: data.acceptedRequests || 0,
+          isDonor: data.isDonor || false,
+        });
       } catch (err) {
-        console.log(err);
+        console.error("Profile API Error:", err.response?.data || err);
       } finally {
         setLoading(false);
       }
     };
 
     loadProfile();
-  }, [profile?.id]);
+  }, [profile, authUser]);
 
   let role = "";
-let badgeColor = "";
+  let badgeColor = "";
 
-if (stats.isDonor) {
-  if (stats.acceptedRequests >= 25) {
-    role = "🏆 Platinum Lifesaver";
-    badgeColor = "platinum";
-  } else if (stats.acceptedRequests >= 10) {
-    role = "🥇 Golden Blood Hero";
-    badgeColor = "gold";
-  } else if (stats.acceptedRequests >= 5) {
-    role = "🥈 Silver Lifeline";
-    badgeColor = "silver";
+  if (stats.isDonor) {
+    if (stats.acceptedRequests >= 25) {
+      role = "🏆 Platinum Lifesaver";
+      badgeColor = "platinum";
+    } else if (stats.acceptedRequests >= 10) {
+      role = "🥇 Golden Blood Hero";
+      badgeColor = "gold";
+    } else if (stats.acceptedRequests >= 5) {
+      role = "🥈 Silver Lifeline";
+      badgeColor = "silver";
+    } else {
+      role = "❤️ Blood Hero";
+      badgeColor = "red";
+    }
+  } else if (profile?.is_volunteer) {
+    role = "🤝 Community Volunteer";
+    badgeColor = "green";
   } else {
-    role = "❤️ Blood Hero";
-    badgeColor = "red";
+    if (stats.requests >= 5) {
+      role = "💙 Life Saver Supporter";
+      badgeColor = "blue";
+    } else {
+      role = "👤 Community Member";
+      badgeColor = "gray";
+    }
   }
-}
-else if (profile?.is_volunteer) {
-  role = "🤝 Community Volunteer";
-  badgeColor = "green";
-}
-else {
-  if (stats.requests >= 5) {
-    role = "💙 Life Saver Supporter";
-    badgeColor = "blue";
-  } else {
-    role = "👤 Community Member";
-    badgeColor = "gray";
+
+  if (!profile) {
+    return (
+      <div className="profile-page">
+        <h2>Loading profile...</h2>
+      </div>
+    );
   }
-}
 
   return (
     <div className="profile-page">
-
       <div className="profile-card">
 
-        {/* HERO */}
-
         <div className="profile-header">
+          <UserCircle size={120} className="profile-avatar" />
 
-          <UserCircle
-            size={120}
-            className="profile-avatar"
-          />
-
-          <h1>{profile?.name}</h1>
+          <h1>{profile.name}</h1>
 
           <div className="profile-role">
-
             {stats.isDonor ? (
               <>
                 <Heart size={16} />
                 Verified Blood Donor
               </>
-            ) : profile?.is_volunteer ? (
+            ) : profile.is_volunteer ? (
               <>
                 <HandHeart size={16} />
                 Volunteer
@@ -118,136 +120,64 @@ else {
                 Life-Link Member
               </>
             )}
-
           </div>
 
-          <div className="status-badge">
-
+          <div className={`status-badge ${badgeColor}`}>
             <ShieldCheck size={16} />
-
-            {stats.isDonor
-              ? "Registered Donor"
-              : "Community Member"}
-
+            {role}
           </div>
-
         </div>
-
-        {/* QUICK STATS */}
 
         <div className="stats-grid">
-
           <div className="stat-card">
-
             <Heart size={28} />
-
-            <h2>
-              {loading ? "..." : stats.requests}
-            </h2>
-
+            <h2>{loading ? "..." : stats.requests}</h2>
             <p>Blood Requests</p>
-
           </div>
 
           <div className="stat-card">
-
             <Droplets size={28} />
-
-            <h2>
-              {loading ? "..." : stats.acceptedRequests}
-            </h2>
-
-            <p>Accepted Requests</p>
-
+            <h2>{loading ? "..." : stats.acceptedRequests}</h2>
+            <p>Accepted Donations</p>
           </div>
-
         </div>
-
-        {/* CONTACT */}
 
         <div className="info-section">
-
-          <h2>
-
-            Contact Information
-
-          </h2>
+          <h2>Contact Information</h2>
 
           <div className="info-row">
-
             <Mail size={18} />
-
-            <span>
-
-              {authUser?.email}
-
-            </span>
-
+            <span>{authUser?.email}</span>
           </div>
 
           <div className="info-row">
-
             <Phone size={18} />
-
-            <span>
-
-              {profile?.phone ||
-                "Not Available"}
-
-            </span>
-
+            <span>{profile.phone || "Not Available"}</span>
           </div>
 
           <div className="info-row">
-
             <MapPin size={18} />
-
-            <span>
-
-              {profile?.location ||
-                "Not Available"}
-
-            </span>
-
+            <span>{profile.location || "Not Available"}</span>
           </div>
-
         </div>
 
-        {/* IMPACT */}
-
         <div className="impact-box">
-
-          <Heart
-            size={24}
-            className="impact-icon"
-          />
+          <Heart size={24} className="impact-icon" />
 
           <div>
-
-            <h3>
-
-              Life-Link Impact
-
-            </h3>
+            <h3>Life-Link Impact</h3>
 
             <p>
-
               {stats.isDonor
-                ? `Thank you for being part of our donor network.
-You have accepted ${stats.acceptedRequests} blood request(s)
-and have the potential to help approximately
-${stats.acceptedRequests * 3} lives.`
-
-                : `Become a registered donor and help save lives during emergency blood requests.`}
-
+                ? `Thank you for being part of our donor network. You have accepted ${stats.acceptedRequests} blood request(s) and have the potential to help approximately ${
+                    stats.acceptedRequests * 3
+                  } lives.`
+                : "Become a registered donor and help save lives during emergency blood requests."}
             </p>
-
           </div>
-
         </div>
 
       </div>
-
     </div>
   );
 }

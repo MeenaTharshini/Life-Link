@@ -11,29 +11,30 @@ import {
 } from "lucide-react";
 
 import "./Landing.css";
-const API = import.meta.env.VITE_API_URL;
+
+const API = import.meta.env.VITE_API_URL || "https://life-link-blood-network.onrender.com";
+
 function Landing() {
   const navigate = useNavigate();
-  
+
   const [stats, setStats] = useState({
-  users: 0,
-  donors: 0,
-  requests: 0,
-});
+    users: 0,
+    donors: 0,
+    requests: 0,
+  });
+
   const [loadingStats, setLoadingStats] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get(
-  `${API}/api/dashboard/stats`
-);
+        const res = await axios.get(`${API}/api/dashboard/stats`);
 
         setStats({
-  users: res.data.users || 0,
-  donors: res.data.donors || 0,
-  requests: res.data.requests || 0,
-});
+          users: res.data.users ?? 0,
+          donors: res.data.donors ?? 0,
+          requests: res.data.requests ?? 0,
+        });
       } catch (err) {
         console.error("Failed to load stats:", err);
       } finally {
@@ -73,7 +74,7 @@ function Landing() {
           transition={{ duration: 0.6 }}
         >
           <span className="hero-badge">
-            Life-Link Blood Finder System
+            Life-Link Blood Finder Network
           </span>
 
           <h1 className="hero-title">
@@ -81,8 +82,8 @@ function Landing() {
           </h1>
 
           <p className="hero-subtitle">
-            A smart blood donation platform that helps patients,
-            hospitals and donors connect during emergencies.
+            A smart blood donation platform connecting patients,
+            hospitals, and blood donors during emergencies.
           </p>
 
           <div className="hero-buttons">
@@ -103,32 +104,30 @@ function Landing() {
         </motion.div>
       </section>
 
-      {/* REAL STATS */}
-      {!loadingStats && stats && (
-        <section className="stats-section">
-          <div className="stats-grid">
+      {/* STATS */}
+      <section className="stats-section">
+        <div className="stats-grid">
 
-            <div className="stat-card">
-              <HeartPulse size={32} />
-              <h2>{stats.donors}</h2>
-              <p>Registered Donors</p>
-            </div>
-
-            <div className="stat-card">
-              <Users size={32} />
-              <h2>{stats.users}</h2>
-              <p>Registered Users</p>
-            </div>
-
-            <div className="stat-card">
-  <Activity size={32} />
-  <h2>{stats.requests}</h2>
-  <p>Blood Requests Sent</p>
-</div>
-
+          <div className="stat-card">
+            <HeartPulse size={32} />
+            <h2>{loadingStats ? "..." : stats.donors}</h2>
+            <p>Registered Donors</p>
           </div>
-        </section>
-      )}
+
+          <div className="stat-card">
+            <Users size={32} />
+            <h2>{loadingStats ? "..." : stats.users}</h2>
+            <p>Registered Users</p>
+          </div>
+
+          <div className="stat-card">
+            <Activity size={32} />
+            <h2>{loadingStats ? "..." : stats.requests}</h2>
+            <p>Blood Requests Sent</p>
+          </div>
+
+        </div>
+      </section>
 
       {/* FEATURES */}
       <section className="feature-grid">
@@ -141,7 +140,7 @@ function Landing() {
         ))}
       </section>
 
-      {/* PROCESS */}
+      {/* HOW IT WORKS */}
       <section className="process-section">
         <h2>How It Works</h2>
 
@@ -149,22 +148,22 @@ function Landing() {
 
           <div className="step-card">
             <h3>1. Register</h3>
-            <p>Create your account.</p>
+            <p>Create your account and complete your profile.</p>
           </div>
 
           <div className="step-card">
             <h3>2. Search</h3>
-            <p>Find compatible donors nearby.</p>
+            <p>Find compatible blood donors nearby.</p>
           </div>
 
           <div className="step-card">
             <h3>3. Connect</h3>
-            <p>Reach donors instantly.</p>
+            <p>Contact donors instantly during emergencies.</p>
           </div>
 
           <div className="step-card">
             <h3>4. Save Lives</h3>
-            <p>Help patients receive blood in emergencies.</p>
+            <p>Help patients receive life-saving blood.</p>
           </div>
 
         </div>
@@ -175,19 +174,20 @@ function Landing() {
         <div className="trust-card">
           <ShieldCheck size={50} />
           <h2>Safe & Verified Platform</h2>
+
           <p>
-            Every registered donor and requester is verified
-            to maintain a trusted blood donation network.
+            Every donor and requester is verified to ensure
+            a trusted and secure blood donation network.
           </p>
         </div>
       </section>
 
       {/* CTA */}
       <section className="cta-section">
-        <h2>Join The Life-Link Community</h2>
+        <h2>Join the Life-Link Community</h2>
 
         <p>
-          Register today and become part of a network
+          Register today and become part of a community
           dedicated to saving lives.
         </p>
 
