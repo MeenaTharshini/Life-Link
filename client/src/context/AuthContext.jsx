@@ -1,0 +1,100 @@
+import { createContext, useContext, useEffect, useState } from "react";
+import supabase from "../lib/supabaseClient";
+import axios from "axios";
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [authUser, setAuthUser] = useState(null);
+  const [profile, setProfile] = useState(null);
+  const [donor, setDonor] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const loadUser = async (supabaseUser) => {
+    try {
+      // Load user profile
+      const profileRes = await axios.get(
+        `http://localhost:5000/api/users/${supabaseUser.id}`
+      );
+
+      setProfile(profileRes.data);
+
+      // Load donor profile (may not exist)
+      try {
+        const donorRes = await axios.get(
+          `http://localhost:5000/api/donors/by-user/${supabaseUser.id}`
+        );
+
+        setDonor(donorRes.data);
+      } catch {
+        setDonor(null);
+      }
+    } catch (err) {
+      console.error("Failed to load profile:", err);
+
+      setProfile(null);
+      setDonor(null);
+    }
+  };
+
+  const login = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) throw error;
+
+    setAuthUser(data.user);
+
+    await loadUser(data.user);
+  };
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+
+    setAuthUser(null);
+    setProfile(null);
+    setDonor(null);
+  };
+
+  const load = async () => {
+    setLoading(true);
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+
+    setAuthUser(user);
+
+    await loadUser(user);
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        authUser,
+        profile,
+        donor,
+        loading,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);

@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body,
+#root{
+  width:100%;
+  min-height:100vh;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#0f172a;
+  color:#fff;
+}
+
+a{
+  text-decoration:none;
+}
+
+button{
+  font-family:inherit;
+}
+
+.app-layout{
+  min-height:100vh;
+  background:#0f172a;
+}
+
+.content-wrapper{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+.main-content{
+  flex:1;
+  padding:40px;
+  max-width:1400px;
+  width:100%;
+  margin:0 auto;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:#111827;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#dc2626;
+  border-radius:20px;
+}
+
+/* Tablet */
+
+@media(max-width:900px){
+
+  .main-content{
+    padding:25px;
+  }
+
+}
+
+/* Mobile */
+
+@media(max-width:600px){
+
+  .main-content{
+    padding:18px;
+  }
+
+}

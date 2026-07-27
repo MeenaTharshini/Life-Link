@@ -1,0 +1,193 @@
+/* =========================
+   PAGE BACKGROUND (SAME GOOD)
+========================= */
+
+.create-request-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(circle at top left, rgba(239, 68, 68, 0.18), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 45%),
+    #070b14;
+}
+
+/* =========================
+   CARD (FIXED SPACING)
+========================= */
+
+.create-request-card {
+  width: 100%;
+  max-width: 520px;
+
+  padding: 32px;
+
+  border-radius: 22px;
+
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;   /* 🔥 important fix */
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.create-request-card h2 {
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   FIELD GROUP (IMPORTANT FIX)
+========================= */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* =========================
+   INPUT + SELECT
+========================= */
+
+.create-request-card select,
+.create-request-card input {
+  width: 100%;
+  height: 50px;
+
+  border-radius: 12px;
+  border: 1px solid #334155;
+
+  background: rgba(255,255,255,0.04);
+  color: white;
+
+  padding: 0 12px;
+
+  transition: 0.2s ease;
+}
+
+.create-request-card select:focus,
+.create-request-card input:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+  outline: none;
+}
+
+/* dropdown fix */
+.create-request-card option {
+  background: #0f172a;
+  color: white;
+}
+
+/* =========================
+   BUTTON (FIXED SIZE)
+========================= */
+
+.create-request-card button {
+  width: 100%;
+  height: 52px;
+
+  margin-top: 6px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.create-request-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(239,68,68,0.3);
+}
+
+/* =========================
+   MESSAGE (FIXED SPACING ISSUE)
+========================= */
+
+.message {
+  margin-top: 12px;
+  text-align: center;
+
+  padding: 10px;
+  border-radius: 10px;
+
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.2);
+
+  color: #d1fae5;
+  font-size: 13px;
+}
+.pageTitle{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#d32f2f;
+    margin-bottom:25px;
+}
+
+.locationBtn,
+.sendBtn{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.location-box{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    background:#f8f8f8;
+    border-radius:8px;
+    margin:12px 0;
+    color:#444;
+}
+
+.message{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    margin-top:18px;
+    border-radius:8px;
+    font-weight:600;
+}
+
+.message.success{
+    background:#e8f5e9;
+    color:#2e7d32;
+}
+
+.message.error{
+    background:#ffebee;
+    color:#c62828;
+}

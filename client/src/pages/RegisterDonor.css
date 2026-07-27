@@ -1,0 +1,477 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+/* =========================
+   PAGE
+========================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.donor-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+
+  font-family: "Inter", sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(239, 68, 68, 0.15),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(59, 130, 246, 0.12),
+      transparent 35%
+    ),
+    #020617;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.donor-card {
+  width: 100%;
+  max-width: 620px;
+
+  background: rgba(15, 23, 42, 0.95);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 28px;
+
+  padding: 40px;
+
+  backdrop-filter: blur(20px);
+
+  position: relative;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.donor-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  border-radius: 50%;
+
+  background: rgba(239, 68, 68, 0.15);
+
+  top: -120px;
+  right: -120px;
+
+  filter: blur(120px);
+}
+
+.donor-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================
+   ICON
+========================= */
+
+.donor-icon {
+  width: 90px;
+  height: 90px;
+
+  margin: 0 auto 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 24px;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color: white;
+
+  box-shadow:
+    0 15px 35px rgba(239, 68, 68, 0.35);
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.donor-card h2 {
+  text-align: center;
+
+  color: white;
+
+  font-size: 2rem;
+  font-weight: 800;
+
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+
+  color: #94a3b8;
+
+  line-height: 1.6;
+
+  margin-bottom: 28px;
+}
+
+/* =========================
+   ELIGIBILITY
+========================= */
+
+.eligibility-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  margin-bottom: 28px;
+
+  background: rgba(16, 185, 129, 0.08);
+
+  border: 1px solid rgba(16, 185, 129, 0.2);
+
+  color: #d1fae5;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================
+   BLOOD GROUP TITLE
+========================= */
+
+.donor-card h3 {
+  color: white;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-bottom: 18px;
+}
+
+/* =========================
+   BLOOD GROUP GRID
+========================= */
+
+.blood-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 28px;
+}
+
+.blood-btn {
+  height: 58px;
+
+  border: 1px solid #334155;
+
+  border-radius: 16px;
+
+  background: rgba(255,255,255,0.03);
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.blood-btn:hover {
+  transform: translateY(-3px);
+
+  border-color: #ef4444;
+}
+
+.blood-btn.active {
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  border-color: transparent;
+
+  box-shadow:
+    0 10px 25px rgba(239,68,68,0.35);
+}
+
+/* =========================
+   LOCATION BUTTON
+========================= */
+
+.location-btn {
+  width: 100%;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  border-radius: 16px;
+
+  border: 1px solid #334155;
+
+  background: rgba(255,255,255,0.03);
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+
+  margin-bottom: 18px;
+}
+
+.location-btn:hover {
+  border-color: #ef4444;
+
+  background: rgba(239,68,68,0.08);
+
+  transform: translateY(-2px);
+}
+
+/* =========================
+   LOCATION STATUS
+========================= */
+
+.location-status{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-top:14px;
+    padding:14px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.04);
+    border:1px solid #334155;
+
+    color:#cbd5e1;
+}
+
+/* =========================
+   REGISTER BUTTON
+========================= */
+
+.register-btn {
+  width: 100%;
+  height: 60px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(239,68,68,0.35);
+}
+
+.register-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================
+   SPINNER
+========================= */
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   MESSAGE BOX
+========================= */
+
+.message-box {
+  margin-top: 20px;
+
+  padding: 14px;
+
+  border-radius: 14px;
+
+  text-align: center;
+
+  background: rgba(16,185,129,0.08);
+
+  border: 1px solid rgba(16,185,129,0.2);
+
+  color: #d1fae5;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .donor-card {
+    padding: 28px 22px;
+  }
+
+  .blood-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .donor-card h2 {
+    font-size: 1.7rem;
+  }
+
+  .donor-icon {
+    width: 75px;
+    height: 75px;
+  }
+}
+/* =========================
+   HERO
+========================= */
+
+.search-hero{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.hero-icon{
+
+    width:90px;
+    height:90px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        rgba(239,68,68,.18),
+        rgba(255,255,255,.05)
+    );
+
+    border:1px solid rgba(239,68,68,.25);
+
+    color:#ef4444;
+
+    box-shadow:
+        0 12px 30px rgba(239,68,68,.25);
+}
+
+.search-badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    margin-bottom:18px;
+
+    background:rgba(239,68,68,.12);
+
+    color:#ef4444;
+
+    font-size:14px;
+
+    font-weight:700;
+}
+
+.search-hero h1{
+
+    color:white;
+
+    font-size:2rem;
+
+    font-weight:800;
+
+    margin-bottom:14px;
+}
+
+.search-hero p{
+
+    color:#94a3b8;
+
+    line-height:1.7;
+
+    max-width:430px;
+
+    margin:0 auto;
+}

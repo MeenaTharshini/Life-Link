@@ -1,0 +1,8 @@
+@import "./Home.css";
+
+.landing-page {
+  width: 100%;
+  background: #0b1220;
+  color: #e2e8f0;
+  padding: 20px;
+}

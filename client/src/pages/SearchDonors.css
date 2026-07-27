@@ -1,0 +1,290 @@
+.search-page{
+    max-width:1300px;
+    margin:auto;
+    padding:30px;
+}
+
+.search-hero{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.hero-icon{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:50%;
+    background:#ef444420;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#ef4444;
+    margin-bottom:20px;
+}
+
+.search-badge{
+    display:inline-block;
+    padding:8px 18px;
+    border-radius:25px;
+    background:#ef444420;
+    color:#ff5757;
+    font-weight:600;
+}
+
+.search-hero h1{
+    font-size:3rem;
+    margin:20px 0;
+}
+
+.search-hero p{
+    max-width:650px;
+    margin:auto;
+    color:#94a3b8;
+}
+.search-card{
+    background:#111827;
+    border-radius:24px;
+    padding:30px;
+    margin:40px 0;
+}
+
+.search-card label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:20px;
+    font-weight:600;
+}
+.blood-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.blood-pill{
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    background:#1f2937;
+    color:white;
+    font-size:16px;
+    transition:.3s;
+}
+
+.blood-pill:hover{
+    transform:translateY(-3px);
+}
+
+.blood-pill.active{
+    background:#ef4444;
+}
+.search-btn{
+    width:100%;
+    margin-top:30px;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:#ef4444;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:17px;
+    font-weight:600;
+    cursor:pointer;
+}
+.result-header{
+    margin:50px 0 25px;
+}
+
+.result-header h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:2rem;
+}
+
+.result-header p{
+    color:#9ca3af;
+}
+.results-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+    gap:30px;
+    align-items:start;
+}
+.donor-card{
+    background:#111827;
+    border-radius:24px;
+    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:20px;
+
+    min-height:520px;
+
+    border:1px solid #1f2937;
+
+    transition:.3s;
+}
+
+.donor-card:hover{
+    transform:translateY(-8px);
+    border-color:#ef4444;
+}
+.donor-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.blood-circle{
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    background:#ef4444;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    font-size:20px;
+    font-weight:bold;
+}
+.status-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    background:#0f3d28;
+    color:#22c55e;
+
+    padding:8px 14px;
+
+    border-radius:25px;
+
+    font-size:14px;
+}
+.avatar{
+    display:flex;
+    justify-content:center;
+}
+
+.avatar svg{
+    width:90px;
+    height:90px;
+    color:white;
+}
+.donor-card h3{
+    text-align:center;
+    font-size:28px;
+    margin:0;
+}
+.info-list{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.info-list div{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.info-list svg{
+    color:#ef4444;
+    flex-shrink:0;
+}
+
+.info-list span{
+    color:#d1d5db;
+    word-break:break-word;
+}
+.contact-btn{
+    margin-top:auto;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    text-decoration:none;
+
+    background:#ef4444;
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    font-size:18px;
+    font-weight:600;
+}
+.loading-box,
+.error-box{
+    margin-top:20px;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.loading-box{
+    background:#1f2937;
+}
+
+.error-box{
+    background:#7f1d1d;
+    color:white;
+}
+@media(max-width:768px){
+
+.search-page{
+    padding:15px;
+}
+
+.search-hero h1{
+    font-size:2rem;
+}
+
+.blood-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.results-grid{
+    grid-template-columns:1fr;
+}
+
+.donor-card{
+    min-height:auto;
+}
+
+}
+.error-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.compatibility-badge{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#e8f5e9;
+    color:#2e7d32;
+    padding:7px 14px;
+    border-radius:20px;
+    width:fit-content;
+    margin:12px auto;
+    font-weight:600;
+    font-size:.9rem;
+}

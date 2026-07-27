@@ -1,0 +1,957 @@
+/* ===========================
+   BACKGROUND
+=========================== */
+
+.notification-page{
+    min-height:100vh;
+    padding:35px;
+    background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+    color:#fff;
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.notification-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+    padding:22px 28px;
+    border-radius:18px;
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+.notification-header h1{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:32px;
+    margin:0;
+}
+
+.notification-header p{
+    margin-top:8px;
+    color:#cbd5e1;
+}
+
+.count{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:white;
+    padding:12px 20px;
+    border-radius:40px;
+    font-weight:700;
+    font-size:15px;
+    box-shadow:0 0 20px rgba(239,68,68,.35);
+}
+
+/* ===========================
+   CARD
+=========================== */
+
+.notification-card{
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:22px;
+    transition:.35s;
+    overflow:hidden;
+    position:relative;
+}
+
+.notification-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 35px rgba(0,0,0,.30);
+}
+
+/* ===========================
+   TOP
+=========================== */
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.blood{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#dc2626;
+    color:white;
+    padding:8px 16px;
+    border-radius:30px;
+    font-weight:700;
+    font-size:15px;
+}
+
+.badge{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    padding:7px 14px;
+
+    border-radius:20px;
+
+    font-size:13px;
+    font-weight:700;
+
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+
+.badge.critical{
+    background:rgba(239,68,68,.15);
+    color:#f87171;
+}
+
+
+.badge.urgent{
+    background:rgba(220,38,38,.15);
+    color:#fb7185;
+}
+
+
+.badge.normal{
+    background:rgba(148,163,184,.15);
+    color:#cbd5e1;
+}
+
+
+/* ===========================
+   MESSAGE
+=========================== */
+
+.notification-card h3{
+    margin:12px 0 20px;
+    font-size:22px;
+    color:white;
+    line-height:1.4;
+}
+
+/* ===========================
+   INFO GRID
+=========================== */
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:22px;
+}
+
+.info span{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.05);
+    color:#e2e8f0;
+    font-size:15px;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+.accept-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.accept-btn:hover{
+    transform:scale(1.02);
+    box-shadow:0 0 25px rgba(239,68,68,.45);
+}
+
+.accept-btn:active{
+    transform:scale(.98);
+}
+
+/* ===========================
+   ACCEPTED BUTTON
+=========================== */
+
+.accepted-btn{
+    background:rgba(34,197,94,.15);
+    color:#4ade80;
+    border:1px solid rgba(34,197,94,.3);
+
+    padding:15px;
+
+    border-radius:14px;
+
+    font-size:16px;
+    font-weight:700;
+}
+
+/* ===========================
+   EMPTY CARD
+=========================== */
+
+.empty-card{
+    text-align:center;
+    padding:80px 20px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:#cbd5e1;
+    font-size:20px;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#ef4444;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+    background:#111827;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.notification-page{
+    padding:18px;
+}
+
+.notification-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.notification-header h1{
+    font-size:26px;
+}
+
+.card-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.info{
+    grid-template-columns:1fr;
+}
+
+.count{
+    align-self:stretch;
+    text-align:center;
+}
+
+}
+/* ==========================
+   MY REQUESTS BUTTON
+========================== */
+
+.myRequestsBtn{
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    border-radius:30px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 8px 20px rgba(239,68,68,.35);
+}
+
+.myRequestsBtn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 28px rgba(239,68,68,.45);
+}
+
+
+/* ==========================
+   DRAWER
+========================== */
+/* ==========================
+   DRAWER
+========================== */
+
+.requestsDrawer{
+    position:fixed;
+    top:0;
+    right:-520px;
+
+    width:520px;
+    max-width:90vw;
+
+    height:100vh;
+
+    background:#111827;
+    color:white;
+
+    transition:.35s ease;
+
+    z-index:2000;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow-y:auto;
+
+    box-shadow:-15px 0 40px rgba(0,0,0,.5);
+}
+
+
+.requestsDrawer.open{
+    right:0;
+}
+
+
+.requestsDrawer::-webkit-scrollbar{
+    width:6px;
+}
+
+
+.requestsDrawer::-webkit-scrollbar-thumb{
+    background:#ef4444;
+    border-radius:20px;
+}
+
+
+/* ==========================
+   DRAWER HEADER
+========================== */
+
+.drawerHeader{
+    padding:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:linear-gradient(135deg,#ef4444,#dc2626);
+    color:white;
+}
+
+.drawerHeader h2{
+    margin:0;
+    font-size:26px;
+}
+
+.drawerHeader button{
+    background:none;
+    border:none;
+    color:white;
+    cursor:pointer;
+    font-size:28px;
+}
+
+
+/* ==========================
+   OVERLAY
+========================== */
+
+.drawerOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    backdrop-filter:blur(2px);
+    z-index:1000;
+}
+
+
+/* ==========================
+   EMPTY
+========================== */
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#cbd5e1;
+}
+
+
+/* ==========================
+   REQUEST CARD
+========================== */
+
+.requestCard{
+
+    margin:18px;
+
+    padding:22px;
+
+    border-radius:18px;
+
+    background:#1f2937;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.18);
+
+    transition:.3s;
+
+}
+
+.requestCard:hover{
+    transform:translateY(-2px);
+}
+
+
+.requestTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.requestTop h3{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#ef4444;
+    margin-bottom:12px;
+}
+
+.requestTop p{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#d1d5db;
+    margin:6px 0;
+    font-size:14px;
+}
+
+
+/* ==========================
+   DONOR COUNT BUTTON
+========================== */
+
+/* ==========================
+   DONOR COUNT BUTTON - ELITE
+========================== */
+
+.donorCountBtn{
+    width:100%;
+    margin-top:20px;
+
+    padding:14px 18px;
+
+    border:none;
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(239,68,68,0.18),
+        rgba(255,255,255,0.08)
+    );
+
+    color:#f8fafc;
+
+    border:1px solid rgba(239,68,68,0.35);
+
+    backdrop-filter:blur(12px);
+
+    font-size:15px;
+    font-weight:700;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    cursor:pointer;
+
+    transition:.35s ease;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.25);
+}
+
+
+.donorCountBtn svg{
+    color:#ef4444;
+}
+
+
+/* hover */
+
+.donorCountBtn:hover{
+
+    transform:translateY(-3px);
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(239,68,68,.35),
+        rgba(255,255,255,.12)
+    );
+
+    border-color:#ef4444;
+
+    box-shadow:
+    0 12px 35px rgba(239,68,68,.25);
+
+}
+
+
+/* ==========================
+   DONOR LIST
+========================== */
+
+.donorList{
+    margin-top:15px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+
+/* ==========================
+   DONOR CARD
+========================== */
+
+.donorCard{
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(220,38,38,.18),
+        rgba(15,23,42,.95)
+    );
+
+    border:1px solid rgba(239, 135, 135, 0.886);
+
+    padding:18px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 30px rgba(232, 167, 167, 0.15);
+
+}
+
+
+.donorCard h4{
+
+    color:#f87171;
+
+}
+
+
+.donorCard p{
+
+    color:#e5e7eb;
+
+}
+
+
+/* ==========================
+   STATUS CHIP
+========================== */
+
+.acceptedBadge{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 12px;
+    border-radius:30px;
+    background:#22c55e;
+    color:white;
+    font-size:13px;
+    font-weight:600;
+}
+
+
+/* ==========================
+   ANIMATION
+========================== */
+
+@keyframes fade{
+
+from{
+    opacity:0;
+    transform:translateY(8px);
+}
+
+to{
+    opacity:1;
+    transform:translateY(0);
+}
+
+}
+
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:768px){
+
+.requestsDrawer{
+    width:100%;
+}
+
+.requestCard{
+    margin:14px;
+}
+
+.drawerHeader h2{
+    font-size:22px;
+}
+
+.myRequestsBtn{
+    width:100%;
+}
+
+}
+.requestTop p{
+
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+
+    color:#d1d5db;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    word-break:break-word;
+
+}
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 12px;
+  padding: 10px 18px;
+
+  background: #ef4444;
+  color: #fff;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.deleteBtn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(239, 68, 68, 0.25);
+}
+
+.deleteBtn:active {
+  transform: scale(0.96);
+}
+
+.deleteBtn svg {
+  width: 16px;
+  height: 16px;
+}
+.iconText {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.iconText svg {
+  flex-shrink: 0;
+  color: #dc2626;
+}
+
+.deleteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.registerDonorBtn {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.registerDonorBtn:hover {
+  background: #b71c1c;
+  transform: translateY(-2px);
+}
+
+.emptyIcon {
+  color: #d32f2f;
+  margin-bottom: 12px;
+}
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 35px 20px;
+  color: #555;
+}
+
+.emptyIcon {
+  color: #e53935;
+  margin-bottom: 12px;
+}
+
+.emptyState h2{
+    color:#fff;
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.empty p {
+  margin-bottom: 18px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.createRequestBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.createRequestBtn:hover {
+  background: #b71c1c;
+  transform: translateY(-2px);
+}
+/* ==========================
+   NOTIFICATION GRID
+========================== */
+
+.notification-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+    gap:22px;
+}
+
+
+/* ==========================
+   COMPACT CARD
+========================== */
+
+.notification-card{
+
+    padding:20px;
+
+    min-height:360px;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+
+/* keep content balanced */
+
+.requester{
+    margin-bottom:15px;
+}
+
+
+.requester p{
+    margin:8px 0;
+}
+
+
+
+/* INFO BOXES */
+
+.info{
+
+    display:grid;
+
+    grid-template-columns:1fr;
+
+    gap:10px;
+
+    margin-bottom:18px;
+
+}
+
+
+.info span{
+
+    min-height:42px;
+
+    padding:10px 12px;
+
+    font-size:14px;
+
+}
+
+
+/* button stays at bottom */
+
+.accept-btn,
+.accepted-btn{
+
+    margin-top:auto;
+
+}
+
+
+
+/* large screens */
+
+@media(min-width:1200px){
+
+.notification-grid{
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+}
+
+}
+
+
+/* medium screens */
+
+@media(max-width:1200px){
+
+.notification-grid{
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+}
+
+}
+
+
+
+/* mobile */
+
+@media(max-width:700px){
+
+.notification-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+/* ==========================
+   CALL DONOR BUTTON
+========================== */
+
+.callBtn {
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    margin-top:14px;
+
+    width:100%;
+
+    padding:12px 18px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f92a1f,
+        #e78080
+    );
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+
+    box-shadow:
+    0 8px 20px rgba(34,197,94,.35);
+
+    transition:.3s ease;
+
+}
+
+
+.callBtn:hover {
+
+    transform:translateY(-3px);
+
+    background:
+    linear-gradient(
+        135deg,
+        #e78080,
+        #f92a1f
+    );
+
+    
+}
+
+
+.callBtn:active {
+
+    transform:scale(.96);
+
+}
