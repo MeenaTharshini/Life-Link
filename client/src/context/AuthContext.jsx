@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import supabase from "../lib/supabaseClient";
 import axios from "axios";
-
+const API = import.meta.env.VITE_API_URL;
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,16 +14,16 @@ export const AuthProvider = ({ children }) => {
     try {
       // Load user profile
       const profileRes = await axios.get(
-        `https://life-link-blood-network.onrender.com/api/users/${supabaseUser.id}`
-      );
+  `${API}/api/users/${supabaseUser.id}`
+);
 
       setProfile(profileRes.data);
 
       // Load donor profile (may not exist)
       try {
         const donorRes = await axios.get(
-          `https://life-link-blood-network.onrender.com/api/donors/by-user/${supabaseUser.id}`
-        );
+  `${API}/api/donors/by-user/${supabaseUser.id}`
+);
 
         setDonor(donorRes.data);
       } catch {
@@ -80,7 +80,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     load();
   }, []);
+  const canRequest = !!authUser;
 
+const canDonate = !!donor;
   return (
     <AuthContext.Provider
       value={{
@@ -90,6 +92,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         login,
         logout,
+        canRequest,
+        canDonate,
       }}
     >
       {children}

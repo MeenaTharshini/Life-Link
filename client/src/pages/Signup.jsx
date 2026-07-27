@@ -6,9 +6,10 @@ import {
   HeartPulse,
   LocateFixed,
   MapPin,
+  AlertTriangle,
 } from "lucide-react";
 import "./Signup.css";
-
+const API = import.meta.env.VITE_API_URL;
 function Signup() {
   const navigate = useNavigate();
 
@@ -109,8 +110,7 @@ function Signup() {
 
       // Save user in your database
       await axios.post(
-        "https://life-link-blood-network.onrender.com/api/users/register",
-        {
+`${API}/api/users/register`,        {
           authId: data.user.id,
           name: form.name,
           email: form.email,

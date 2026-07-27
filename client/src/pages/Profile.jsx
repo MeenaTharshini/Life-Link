@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import "./Profile.css";
-
+const API = import.meta.env.VITE_API_URL;
 function Profile() {
   const { authUser, profile } = useAuth();
 
@@ -34,8 +34,8 @@ function Profile() {
     const loadProfile = async () => {
       try {
         const res = await axios.get(
-          `https://life-link-blood-network.onrender.com/api/profile/${profile.id}`
-        );
+  `${API}/api/profile/${profile.id}`
+);
 
         setStats({
   requests: res.data.requests || 0,

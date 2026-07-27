@@ -11,10 +11,10 @@ import {
 } from "lucide-react";
 
 import "./Landing.css";
-
+const API = import.meta.env.VITE_API_URL;
 function Landing() {
   const navigate = useNavigate();
-
+  
   const [stats, setStats] = useState({
   users: 0,
   donors: 0,
@@ -26,8 +26,8 @@ function Landing() {
     const fetchStats = async () => {
       try {
         const res = await axios.get(
-          "https://life-link-blood-network.onrender.com/api/dashboard/stats"
-        );
+  `${API}/api/dashboard/stats`
+);
 
         setStats({
   users: res.data.users || 0,

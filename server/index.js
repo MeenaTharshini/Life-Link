@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://life-link-blood-network.onrender.com",
+      "https://life-link-blood-finder-network.onrender.com",
     ],
     credentials: true,
   })

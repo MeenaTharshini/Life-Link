@@ -12,6 +12,7 @@ import {
   CheckCircle,
   HeartHandshake,
 } from "lucide-react";
+const API = import.meta.env.VITE_API_URL;
 function CreateRequest() {
   const { profile } = useAuth();
 
@@ -80,7 +81,7 @@ function CreateRequest() {
 
   try {
     const res = await axios.post(
-      "https://life-link-blood-network.onrender.com/api/requests/create",
+  `${API}/api/requests/create`,
       {
         hospital_id: profile.id,
         blood_group: form.blood_group,

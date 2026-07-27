@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 
 import "./Notifications.css";
-
+const API = import.meta.env.VITE_API_URL;
 export default function Notifications() {
 
   const { donor, profile } = useAuth();
@@ -100,8 +100,8 @@ console.log("donor =", donor);
     try {
 
       const res = await axios.get(
-        `https://life-link-blood-network.onrender.com/api/responses/hospital/${profile.id}`
-      );
+  `${API}/api/responses/hospital/${profile.id}`
+);
 
       setRequests(res.data || []);
 
@@ -121,8 +121,8 @@ console.log("donor =", donor);
 
   try {
     await axios.delete(
-      `https://life-link-blood-network.onrender.com/api/requests/${requestId}`
-    );
+  `${API}/api/requests/${requestId}`
+);
 
     loadRequests();
 
@@ -141,7 +141,7 @@ console.log("donor =", donor);
     try {
 
       await axios.post(
-  "https://life-link-blood-network.onrender.com/api/responses/accept",
+  `${API}/api/responses/accept`,
   {
     donor_id: donor.id,
     request_id: notification.request_id,

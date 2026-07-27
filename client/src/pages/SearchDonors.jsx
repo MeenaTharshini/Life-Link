@@ -15,6 +15,7 @@ import {
   BadgeCheck,
   ShieldCheck,
 } from "lucide-react";
+const API = import.meta.env.VITE_API_URL;
 function SearchDonors() {
   const [bloodGroup, setBloodGroup] = useState("");
   const [donors, setDonors] = useState([]);
@@ -48,8 +49,7 @@ function SearchDonors() {
     async ({ coords }) => {
       try {
         const res = await axios.get(
-          `https://life-link-blood-network.onrender.com/api/donors/nearby/${bloodGroup}`,
-          {
+`${API}/api/donors/nearby/${bloodGroup}`,          {
             params: {
               latitude: coords.latitude,
               longitude: coords.longitude,

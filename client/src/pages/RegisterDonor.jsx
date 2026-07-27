@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import "./RegisterDonor.css";
-
+const API = import.meta.env.VITE_API_URL;
 function RegisterDonor() {
   const { authUser, profile } = useAuth();
 
@@ -117,8 +117,7 @@ function RegisterDonor() {
       setMessage("");
 
       await axios.post(
-  "https://life-link-blood-network.onrender.com/api/donors/register",
-  {
+`${API}/api/donors/register`,  {
     authId: authUser.id,
     blood_group: form.blood_group,
     location: locationName,
