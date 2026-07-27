@@ -88,23 +88,32 @@ function Dashboard() {
               Find Donors
             </button>
 
-            {canRequest && (
-              <button
-                className="secondary-btn"
-                onClick={() => navigate("/blood-request")}
-              >
-                Create Request
-              </button>
-            )}
+            {/* Create Request only for logged-in users */}
+{canRequest && (
+  <button
+    className="secondary-btn"
+    onClick={() => navigate("/create-request")}
+  >
+    Create Request
+  </button>
+)}
 
-            {canDonate && (
-              <button
-                className="secondary-btn"
-                onClick={() => navigate("/nearby-requests")}
-              >
-                View Requests
-              </button>
-            )}
+{/* If user is NOT a donor, show Become Donor */}
+{!canDonate ? (
+  <button
+    className="secondary-btn"
+    onClick={() => navigate("/register-donor")}
+  >
+    Become Donor
+  </button>
+) : (
+  <button
+    className="secondary-btn"
+    onClick={() => navigate("/notifications")}
+  >
+    View Requests
+  </button>
+)}
 
           </div>
         </motion.div>
