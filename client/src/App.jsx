@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -35,7 +35,7 @@ function AppLayout({ children }) {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
 
         {/* ================= PUBLIC ROUTES ================= */}
@@ -136,7 +136,7 @@ function App() {
         <Route path="*" element={<Landing />} />
 
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
