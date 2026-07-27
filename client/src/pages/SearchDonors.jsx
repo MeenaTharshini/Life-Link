@@ -48,7 +48,7 @@ function SearchDonors() {
     async ({ coords }) => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/donors/nearby/${bloodGroup}`,
+          `https://life-link-blood-network.onrender.com/api/donors/nearby/${bloodGroup}`,
           {
             params: {
               latitude: coords.latitude,

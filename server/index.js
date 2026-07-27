@@ -6,7 +6,15 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://life-link-blood-network.onrender.com",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/api/profile", profileRoutes);

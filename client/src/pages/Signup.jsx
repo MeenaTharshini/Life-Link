@@ -109,7 +109,7 @@ function Signup() {
 
       // Save user in your database
       await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://life-link-blood-network.onrender.com/api/users/register",
         {
           authId: data.user.id,
           name: form.name,

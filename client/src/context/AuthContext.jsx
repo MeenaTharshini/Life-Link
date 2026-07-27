@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Load user profile
       const profileRes = await axios.get(
-        `http://localhost:5000/api/users/${supabaseUser.id}`
+        `https://life-link-blood-network.onrender.com/api/users/${supabaseUser.id}`
       );
 
       setProfile(profileRes.data);
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       // Load donor profile (may not exist)
       try {
         const donorRes = await axios.get(
-          `http://localhost:5000/api/donors/by-user/${supabaseUser.id}`
+          `https://life-link-blood-network.onrender.com/api/donors/by-user/${supabaseUser.id}`
         );
 
         setDonor(donorRes.data);

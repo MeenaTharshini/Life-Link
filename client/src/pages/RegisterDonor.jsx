@@ -117,7 +117,7 @@ function RegisterDonor() {
       setMessage("");
 
       await axios.post(
-  "http://localhost:5000/api/donors/register",
+  "https://life-link-blood-network.onrender.com/api/donors/register",
   {
     authId: authUser.id,
     blood_group: form.blood_group,

@@ -100,7 +100,7 @@ console.log("donor =", donor);
     try {
 
       const res = await axios.get(
-        `http://localhost:5000/api/responses/hospital/${profile.id}`
+        `https://life-link-blood-network.onrender.com/api/responses/hospital/${profile.id}`
       );
 
       setRequests(res.data || []);
@@ -121,7 +121,7 @@ console.log("donor =", donor);
 
   try {
     await axios.delete(
-      `http://localhost:5000/api/requests/${requestId}`
+      `https://life-link-blood-network.onrender.com/api/requests/${requestId}`
     );
 
     loadRequests();
@@ -141,7 +141,7 @@ console.log("donor =", donor);
     try {
 
       await axios.post(
-  "http://localhost:5000/api/responses/accept",
+  "https://life-link-blood-network.onrender.com/api/responses/accept",
   {
     donor_id: donor.id,
     request_id: notification.request_id,

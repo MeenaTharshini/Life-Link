@@ -26,7 +26,7 @@ function Dashboard() {
   // Fetch dashboard stats
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/dashboard/stats")
+      .get("https://life-link-blood-network.onrender.com/api/dashboard/stats")
       .then((res) => {
         setStats({
   users: res.data.users || 0,

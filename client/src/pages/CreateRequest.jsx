@@ -80,7 +80,7 @@ function CreateRequest() {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/requests/create",
+      "https://life-link-blood-network.onrender.com/api/requests/create",
       {
         hospital_id: profile.id,
         blood_group: form.blood_group,

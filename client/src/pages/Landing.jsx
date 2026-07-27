@@ -26,7 +26,7 @@ function Landing() {
     const fetchStats = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/dashboard/stats"
+          "https://life-link-blood-network.onrender.com/api/dashboard/stats"
         );
 
         setStats({

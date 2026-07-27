@@ -52,7 +52,7 @@ if (!user) {
       setMessage("");
 
       const res = await axios.post(
-        "http://localhost:5000/api/users/register",
+        "https://life-link-blood-network.onrender.com/api/users/register",
         {
           authId: user.id,
           name: form.name,
