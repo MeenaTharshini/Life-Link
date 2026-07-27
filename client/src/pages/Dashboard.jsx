@@ -89,6 +89,7 @@ function Dashboard() {
             </button>
 
             {/* Create Request only for logged-in users */}
+{/* Everyone can create a blood request */}
 {canRequest && (
   <button
     className="secondary-btn"
@@ -98,15 +99,18 @@ function Dashboard() {
   </button>
 )}
 
-{/* If user is NOT a donor, show Become Donor */}
-{!canDonate ? (
+{/* Only NON-DONORS see Become Donor */}
+{canRequest && !canDonate && (
   <button
     className="secondary-btn"
     onClick={() => navigate("/register-donor")}
   >
     Become Donor
   </button>
-) : (
+)}
+
+{/* Only DONORS see View Requests */}
+{canDonate && (
   <button
     className="secondary-btn"
     onClick={() => navigate("/notifications")}
@@ -114,7 +118,6 @@ function Dashboard() {
     View Requests
   </button>
 )}
-
           </div>
         </motion.div>
       </section>

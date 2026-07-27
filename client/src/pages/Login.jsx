@@ -62,7 +62,7 @@ function Login() {
           />
         </div>
         <h1 className="app-title">
-      Life Link Blood Finder Network
+      Life-Link Blood Finder Network
     </h1>
 
         <h2>Welcome Back</h2>
