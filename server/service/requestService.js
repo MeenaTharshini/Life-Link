@@ -1,6 +1,5 @@
 const supabase = require("../supabaseClient");
-const { createNotifications } = require("./notificationService");
-
+const { createAndSendNotifications } = require("./notificationService");
 async function createBloodRequest(data) {
   const { data: request, error } = await supabase
     .from("blood_requests")

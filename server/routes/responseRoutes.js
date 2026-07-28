@@ -26,11 +26,31 @@ router.post("/accept", async (req, res) => {
       .eq("request_id", request_id)
       .maybeSingle();
 
-    if (existing) {
-      return res.status(400).json({
-        error: "You already responded to this request",
-      });
-    }
+      if (existing) {
+
+  const { data, error } = await supabase
+    .from("request_responses")
+    .update({
+      status: "accepted",
+      distance: distance || null,
+    })
+    .eq("id", existing.id)
+    .select()
+    .single();
+
+
+  if (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+
+
+  return res.json({
+    success:true,
+    message:"Request accepted successfully",
+    data
+  });
+}
 
     /* =========================
        INSERT RESPONSE (ACCEPTED)
