@@ -141,6 +141,30 @@ setAcceptedCount(totalAccepted);
 
   }
 }
+  async function startEmergency(requestId) {
+  try {
+    const res = await axios.post(
+      `${API}/api/emergency/start`,
+      {
+        requestId,
+      }
+    );
+
+    alert(
+      `Emergency Broadcast Started!\n${res.data.data.notifiedDonors} donors notified.`
+    );
+
+    loadRequests();
+
+  } catch (err) {
+    console.log("Emergency Error:", err.response?.data);
+
+    alert(
+      err.response?.data?.message ||
+      "Unable to start emergency."
+    );
+  }
+}
   async function acceptDonation(notification) {
     
     try {
@@ -450,7 +474,21 @@ key={index}
   Delete Request
 </button>
 </div>
-
+{!req.blood_requests.emergency ? (
+  <button
+    className="emergencyBtn"
+    onClick={() => startEmergency(req.blood_requests.id)}
+  >
+    🚨 Start Emergency Broadcast
+  </button>
+) : (
+  <button
+    className="emergencyRunningBtn"
+    disabled
+  >
+    🚨 Emergency Active
+  </button>
+)}
 </div>
 
 <button

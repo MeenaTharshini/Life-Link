@@ -264,12 +264,7 @@ address && (
       </span>
   </div>
 )}
-<button
-  className="emergencyBtn"
-  onClick={startEmergency}
->
-  🚨 Start Emergency Broadcast
-</button>
+
       </div>
     </div>
   );
