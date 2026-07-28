@@ -25,11 +25,18 @@ const createAndSendNotifications = async ({ donors, request }) => {
   }));
 
   const { data, error } = await supabase
-    .from("notifications")
-    .insert(notifications)
-    .select();
+  .from("notifications")
+  .upsert(notifications, {
+    onConflict: "donor_id,request_id",
+  })
+  .select();
 
-  if (error) throw error;
+if (error) {
+  console.log(error);
+  throw error;
+}
+
+return data;
 
   return data;
 };
