@@ -109,7 +109,43 @@ function CreateRequest() {
     setSending(false);
   }
 };
+  const startEmergency = async () => {
+  if (!form.blood_group || !location) {
+    setMsg("Fill all fields first.");
+    return;
+  }
 
+  try {
+    // First create the request
+    const requestRes = await axios.post(
+      `${API}/api/requests/create`,
+      {
+        hospital_id: profile.id,
+        blood_group: form.blood_group,
+        urgency: form.urgency,
+        units: form.units,
+        latitude: location.lat,
+        longitude: location.lng,
+        address,
+      }
+    );
+
+    // Then trigger emergency
+    await axios.post(
+      `${API}/api/emergency/start`,
+      {
+        requestId: requestRes.data.id,
+      }
+    );
+
+    setMsg("🚨 Emergency Broadcast Started Successfully!");
+  } catch (err) {
+    setMsg(
+      err.response?.data?.error ||
+      "Unable to start emergency."
+    );
+  }
+};
   return (
     <div className="create-request-page">
       <div className="create-request-card">
@@ -210,6 +246,12 @@ address && (
       </span>
   </div>
 )}
+<button
+  className="emergencyBtn"
+  onClick={startEmergency}
+>
+  🚨 Start Emergency Broadcast
+</button>
       </div>
     </div>
   );

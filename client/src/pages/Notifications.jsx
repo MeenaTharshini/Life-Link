@@ -19,13 +19,19 @@ import {
   User,
   Syringe,
 } from "lucide-react";
-
+import { useEmergency } from "../context/EmergencyContext";
 import "./Notifications.css";
 const API = import.meta.env.VITE_API_URL;
 export default function Notifications() {
 
-  const { donor, profile,
-    setAcceptedCount } = useAuth();
+ const {
+  donor,
+  profile,
+  setAcceptedCount,
+  setNotificationCount,
+} = useAuth();
+
+const { closeEmergency } = useEmergency();
 
 const userId = profile?.id;
 const donorId = donor?.id;
@@ -136,7 +142,7 @@ setAcceptedCount(totalAccepted);
   }
 }
   async function acceptDonation(notification) {
-
+    
     try {
 
       await axios.post(
@@ -147,19 +153,39 @@ setAcceptedCount(totalAccepted);
     distance: notification.distance,
   }
 );
+await supabase
+.from("notifications")
+.update({
+  is_read: true,
+  status: "accepted",
+})
+.eq("id", notification.id);
 
-      await supabase
-        .from("notifications")
-        .update({
-          status: "accepted",
-          is_read: true,
-        })
-        .eq("id", notification.id);
+setNotificationCount(0);
 
-      loadNotifications();
+// Remove one unread notification
+setNotificationCount((prev) => Math.max(prev - 1, 0));
+
+// Close emergency popup if it is open
+closeEmergency();
+
+setNotifications(prev =>
+  prev.map(item =>
+    item.id === notification.id
+      ? {
+          ...item,
+          status:"accepted",
+          is_read:true
+        }
+      : item
+  )
+);
 
     } catch (err) {
-
+      console.log(
+    "ACCEPT ERROR:",
+    err.response?.data
+  );
       alert(err.response?.data?.error || "Unable to accept");
 
     }

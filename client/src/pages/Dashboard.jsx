@@ -9,9 +9,10 @@ import {
   ShieldCheck,
   Activity,
 } from "lucide-react";
-
+import EmergencyPopup from "../components/EmergencyPopup";
 import { useAuth } from "../context/AuthContext";
 import "./Dashboard.css";
+import { useEmergency } from "../context/EmergencyContext";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Dashboard() {
     donors: 0,
     requests:0,
   });
-
+  const [emergencyNotification, setEmergencyNotification] = useState(null);
   // Fetch dashboard stats
   useEffect(() => {
     axios
@@ -56,6 +57,13 @@ function Dashboard() {
       desc: "Connect with trusted registered donors.",
     },
   ];
+  const handleAcceptEmergency = (notification) => {
+  navigate("/notifications");
+};
+
+const handleCloseEmergency = () => {
+  setEmergencyNotification(null);
+};
 
   return (
     <div className="home-page">
@@ -214,6 +222,11 @@ function Dashboard() {
           Register As Donor
         </button>
       </section>
+      <EmergencyPopup
+        notification={emergencyNotification}
+        onAccept={handleAcceptEmergency}
+        onClose={handleCloseEmergency}
+      />
 
     </div>
   );

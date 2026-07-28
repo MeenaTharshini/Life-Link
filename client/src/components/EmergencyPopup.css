@@ -1,0 +1,127 @@
+.emergency-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.7);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+animation:fadeIn .3s;
+}
+
+.emergency-popup{
+width:430px;
+max-width:95%;
+background:white;
+border-radius:18px;
+padding:28px;
+position:relative;
+text-align:center;
+animation:popup .35s;
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+
+.close-btn{
+position:absolute;
+right:15px;
+top:15px;
+background:none;
+border:none;
+cursor:pointer;
+}
+
+.popup-header h1{
+color:#d62828;
+margin:10px 0;
+}
+
+.popup-header p{
+color:#555;
+}
+
+.danger-icon{
+color:#d62828;
+animation:blink .9s infinite;
+}
+
+.timer-circle{
+margin:22px auto;
+width:110px;
+height:110px;
+border-radius:50%;
+border:5px solid #d62828;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:28px;
+font-weight:bold;
+color:#d62828;
+}
+
+.popup-info{
+margin-top:20px;
+text-align:left;
+}
+
+.row{
+display:flex;
+gap:10px;
+margin:12px 0;
+align-items:center;
+}
+
+.popup-buttons{
+margin-top:25px;
+display:flex;
+gap:15px;
+}
+
+.accept-btn{
+flex:1;
+padding:14px;
+background:#d62828;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+}
+
+.accept-btn:hover{
+background:#b71c1c;
+}
+
+.later-btn{
+flex:1;
+padding:14px;
+border:none;
+background:#ddd;
+border-radius:10px;
+cursor:pointer;
+}
+
+@keyframes blink{
+0%{opacity:1;}
+50%{opacity:.3;}
+100%{opacity:1;}
+}
+
+@keyframes popup{
+from{
+transform:scale(.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
