@@ -24,9 +24,12 @@ function Navbar() {
   const navigate = useNavigate();
 
   const {
-    authUser,
-    logout,
-  } = useAuth();
+  authUser,
+  logout,
+  canDonate,
+  notificationCount,
+  acceptedCount,
+} = useAuth();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -55,7 +58,17 @@ function Navbar() {
   },
   {
     to: "/notifications",
-    icon: <Bell size={22} />,
+    icon: (
+      <div className="nav-icon">
+        <Bell size={22} />
+
+        {canDonate && notificationCount > 0 && (
+          <span className="nav-badge">
+            {notificationCount}
+          </span>
+        )}
+      </div>
+    ),
     text: "Alerts",
   },
   {
@@ -86,10 +99,20 @@ function Navbar() {
       text: "Become Donor",
     },
     {
-      to: "/notifications",
-      icon: <Bell size={18} />,
-      text: "Notifications",
-    },
+    to: "/notifications",
+    icon: (
+      <div className="nav-icon">
+        <Bell size={18} />
+
+        {canDonate && notificationCount > 0 && (
+          <span className="nav-badge">
+            {notificationCount}
+          </span>
+        )}
+      </div>
+    ),
+    text: "Notifications",
+  },
     {
       to: "/profile",
       icon: <UserCircle size={18} />,
@@ -120,11 +143,12 @@ function Navbar() {
       <div className="navbar-container">
 
         <Link
-          to={authUser ? "/dashboard" : "/"}
-          className="logo"
-        >
-           Life-Link
-        </Link>
+  to={authUser ? "/dashboard" : "/"}
+  className="logo"
+>
+  <span className="live-dot"></span>
+  <span>Life-Link</span>
+</Link>
 
         <nav className="nav-menu">
           {(authUser ? loggedInLinks : guestLinks).map((item) => (

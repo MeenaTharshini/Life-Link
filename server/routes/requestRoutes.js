@@ -91,7 +91,6 @@ res.json({
 
 } catch (err) {
   console.log("NOTIFICATION ERROR:");
-  console.dir(err, { depth: null });
 
   return res.status(500).json({
     error: err.message,

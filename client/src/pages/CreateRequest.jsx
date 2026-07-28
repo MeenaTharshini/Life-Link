@@ -93,13 +93,11 @@ function CreateRequest() {
       }
     );
 
-    console.log("RESPONSE:", res.data);
 
     setMsg(
   `Request created successfully! ${res.data.dispatched_to} donors notified`
 );
   } catch (err) {
-  console.log(err.response?.data);
   console.log(err);
 
   setMsg(

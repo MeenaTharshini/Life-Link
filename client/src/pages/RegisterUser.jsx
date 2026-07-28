@@ -65,8 +65,6 @@ if (!user) {
 
       setMessage("✅ Profile created successfully!");
 
-      console.log(res.data);
-
       setForm({
         name: "",
         phone: "",

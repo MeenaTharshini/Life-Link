@@ -24,13 +24,12 @@ import "./Notifications.css";
 const API = import.meta.env.VITE_API_URL;
 export default function Notifications() {
 
-  const { donor, profile } = useAuth();
+  const { donor, profile,
+    setAcceptedCount } = useAuth();
 
 const userId = profile?.id;
 const donorId = donor?.id;
-  console.log("userId =", userId);
-console.log("profile =", profile);
-console.log("donor =", donor);
+  
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -42,49 +41,38 @@ console.log("donor =", donor);
   const navigate = useNavigate();
   
   useEffect(() => {
-  loadNotifications();
+  if (donor) {
+    loadNotifications();
+  } else {
+    setNotifications([]);
+    setLoading(false);
+  }
 
   if (profile) {
     loadRequests();
   }
+}, [donor, profile]);
 
-  if (!donorId) return;
-
-  const channel = supabase
-    .channel(`notifications-${userId}`)
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "notifications",
-        filter: `donor_id=eq.${donorId}`,
-      },
-      payload => {
-        setNotifications(prev => [payload.new, ...prev]);
-      }
-    )
-    .subscribe();
-
-  return () => supabase.removeChannel(channel);
-}, [donorId, profile]);
-
+  
   async function loadNotifications() {
-  // User is not a donor
+  console.log("loadNotifications called");
+
+  setLoading(true);
+
   if (!donor) {
+    console.log("No donor");
     setNotifications([]);
     setLoading(false);
     return;
   }
 
-  console.log("Loading donor notifications:", donor.id);
-
   const { data, error } = await supabase
-    .from("notifications")
-    .select("*")
-    .eq("donor_id", donor.id)
-    .order("created_at", { ascending: false });
+  .from("notifications")
+  .select("*")
+  .eq("donor_id", donor.id)
+  .order("created_at", { ascending: false });
 
+  
   if (error) {
     console.error(error);
     setLoading(false);
@@ -95,6 +83,7 @@ console.log("donor =", donor);
   setLoading(false);
 }
 
+
   async function loadRequests() {
 
     try {
@@ -103,7 +92,17 @@ console.log("donor =", donor);
   `${API}/api/responses/hospital/${profile.id}`
 );
 
-      setRequests(res.data || []);
+      const requestData = res.data || [];
+
+setRequests(requestData);
+
+// Count total accepted donors
+const totalAccepted = requestData.reduce(
+  (total, req) => total + req.accepted_donors.length,
+  0
+);
+
+setAcceptedCount(totalAccepted);
 
     } catch (err) {
 

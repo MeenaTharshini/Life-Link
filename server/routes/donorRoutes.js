@@ -16,7 +16,6 @@ const {
     longitude,
 } = req.body;
 
-console.log("Searching auth_id =", authId);
 
 const { data: user, error: userError } = await supabase
     .from("users")
@@ -24,8 +23,6 @@ const { data: user, error: userError } = await supabase
     .eq("auth_id", authId)
     .single();
 
-console.log(user);
-console.log(userError);
 
     if (userError || !user) {
       return res.status(404).json({

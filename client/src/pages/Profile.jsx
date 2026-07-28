@@ -12,6 +12,10 @@ import {
   ShieldCheck,
   Users,
   HandHeart,
+  Award,
+  Medal,
+  Crown,
+  BadgeCheck,
 } from "lucide-react";
 
 import "./Profile.css";
@@ -32,9 +36,6 @@ function Profile() {
   useEffect(() => {
     if (!profile) return;
 
-    console.log("Supabase Auth ID:", authUser?.id);
-    console.log("Database User ID:", profile?.id);
-
     const loadProfile = async () => {
       try {
         const { data } = await axios.get(
@@ -47,7 +48,7 @@ function Profile() {
           isDonor: data.isDonor || false,
         });
       } catch (err) {
-        console.error("Profile API Error:", err.response?.data || err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -57,34 +58,42 @@ function Profile() {
   }, [profile, authUser]);
 
   let role = "";
-  let badgeColor = "";
+let badgeColor = "";
+let RoleIcon = ShieldCheck;
 
-  if (stats.isDonor) {
-    if (stats.acceptedRequests >= 25) {
-      role = "🏆 Platinum Lifesaver";
-      badgeColor = "platinum";
-    } else if (stats.acceptedRequests >= 10) {
-      role = "🥇 Golden Blood Hero";
-      badgeColor = "gold";
-    } else if (stats.acceptedRequests >= 5) {
-      role = "🥈 Silver Lifeline";
-      badgeColor = "silver";
-    } else {
-      role = "❤️ Blood Hero";
-      badgeColor = "red";
-    }
-  } else if (profile?.is_volunteer) {
-    role = "🤝 Community Volunteer";
-    badgeColor = "green";
+if (stats.isDonor) {
+  if (stats.acceptedRequests >= 25) {
+    role = "Platinum Lifesaver";
+    badgeColor = "platinum";
+    RoleIcon = Crown;
+  } else if (stats.acceptedRequests >= 10) {
+    role = "Golden Blood Hero";
+    badgeColor = "gold";
+    RoleIcon = Award;
+  } else if (stats.acceptedRequests >= 5) {
+    role = "Silver Lifeline";
+    badgeColor = "silver";
+    RoleIcon = Medal;
   } else {
-    if (stats.requests >= 5) {
-      role = "💙 Life Saver Supporter";
-      badgeColor = "blue";
-    } else {
-      role = "👤 Community Member";
-      badgeColor = "gray";
-    }
+    role = "Blood Hero";
+    badgeColor = "red";
+    RoleIcon = Heart;
   }
+} else if (profile?.is_volunteer) {
+  role = "Community Volunteer";
+  badgeColor = "green";
+  RoleIcon = HandHeart;
+} else {
+  if (stats.requests >= 5) {
+    role = "Life Saver Supporter";
+    badgeColor = "blue";
+    RoleIcon = BadgeCheck;
+  } else {
+    role = "Community Member";
+    badgeColor = "gray";
+    RoleIcon = Users;
+  }
+}
 
   if (!profile) {
     return (
@@ -123,9 +132,9 @@ function Profile() {
           </div>
 
           <div className={`status-badge ${badgeColor}`}>
-            <ShieldCheck size={16} />
-            {role}
-          </div>
+  <RoleIcon size={16} />
+  <span>{role}</span>
+</div>
         </div>
 
         <div className="stats-grid">

@@ -6,8 +6,6 @@ router.get("/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    console.log("PROFILE ROUTE HIT:", userId);
-
     /* ---------------- USER ---------------- */
 
     const { data: user, error: userError } = await supabase
@@ -78,8 +76,7 @@ if (donor) {
 
   } catch (err) {
 
-    console.error("PROFILE ERROR:", err);
-
+    
     res.status(500).json({
       success: false,
       error: err.message,
