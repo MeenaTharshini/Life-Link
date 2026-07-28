@@ -25,7 +25,6 @@ async function startEmergency(body) {
     .from("blood_requests")
     .update({
       emergency: true,
-      priority: "emergency",
       broadcast_time: new Date().toISOString(),
     })
     .eq("id", requestId);
@@ -86,7 +85,6 @@ async function cancelEmergency(requestId) {
     .from("blood_requests")
     .update({
   emergency: false,
-  priority: "normal",
 })
     .eq("id", requestId);
 

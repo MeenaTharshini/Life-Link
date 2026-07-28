@@ -92,7 +92,7 @@ function CreateRequest() {
         address: address,
       }
     );
-
+    console.log("CREATE REQUEST RESPONSE:", res.data);
 
     setMsg(
   `Request created successfully! ${res.data.dispatched_to} donors notified`
@@ -110,13 +110,14 @@ function CreateRequest() {
   }
 };
   const startEmergency = async () => {
+
   if (!form.blood_group || !location) {
     setMsg("Fill all fields first.");
     return;
   }
 
   try {
-    // First create the request
+
     const requestRes = await axios.post(
       `${API}/api/requests/create`,
       {
@@ -130,20 +131,37 @@ function CreateRequest() {
       }
     );
 
-    // Then trigger emergency
+    console.log(
+      "CREATE REQUEST RESPONSE:",
+      requestRes.data
+    );
+
+
     await axios.post(
       `${API}/api/emergency/start`,
       {
-        requestId: requestRes.data.id,
+        requestId: requestRes.data.request.id,
       }
     );
 
-    setMsg("🚨 Emergency Broadcast Started Successfully!");
+
+    setMsg(
+      "🚨 Emergency Broadcast Started Successfully!"
+    );
+
+
   } catch (err) {
+
+    console.log(
+      "EMERGENCY ERROR:",
+      err.response?.data
+    );
+
     setMsg(
       err.response?.data?.error ||
       "Unable to start emergency."
     );
+
   }
 };
   return (

@@ -35,9 +35,9 @@ export function EmergencyProvider({ children }) {
 
           // Show popup only for emergency notifications
           if (
-            notification.priority === "emergency" &&
-            !notification.popup_seen
-          ) {
+  notification.emergency &&
+  !notification.popup_seen
+){
             setEmergencyNotification(notification);
 
             // Mark popup shown
