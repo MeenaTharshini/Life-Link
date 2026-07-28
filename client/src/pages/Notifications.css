@@ -1172,3 +1172,152 @@ to{
 .emergencyBtn:active{
     transform:scale(.97);
 }
+/* ===========================
+   Emergency Actions
+=========================== */
+
+.emergencyActions{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:12px;
+}
+
+.runningButtons{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    width:100%;
+}
+
+/* ===========================
+   Start Emergency
+=========================== */
+
+.emergencyBtn{
+
+    width:240px;
+    max-width:100%;
+
+    min-height:52px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    padding:14px 18px;
+
+    border:none;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #ff4d4f,
+        #dc2626
+    );
+
+    color:white;
+
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+    0 10px 25px rgba(220,38,38,.35);
+
+}
+
+.emergencyBtn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ===========================
+   Emergency Running
+=========================== */
+
+.emergencyRunningBtn{
+
+    width:240px;
+    max-width:70%;
+
+    min-height:50px;
+
+    border:none;
+    border-radius:14px;
+
+    background:#16a34a;
+
+    color:white;
+
+    font-size:15px;
+    font-weight:700;
+}
+
+/* ===========================
+   Stop Button
+=========================== */
+
+.stopEmergencyBtn{
+
+    width:240px;
+    max-width:100%;
+
+    min-height:50px;
+
+    border:none;
+    border-radius:14px;
+
+    background:#374151;
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.stopEmergencyBtn:hover{
+
+    background:#ef4444;
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:768px){
+
+.requestTop{
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.emergencyActions{
+
+    width:100%;
+
+}
+
+.emergencyBtn,
+.emergencyRunningBtn,
+.stopEmergencyBtn{
+
+    width:100%;
+
+    font-size:14px;
+
+}
+
+}

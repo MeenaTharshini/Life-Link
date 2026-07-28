@@ -81,11 +81,32 @@ exports.completeEmergency = async (req, res) => {
 
   }
 };
+exports.stopEmergency = async (req, res) => {
+    try {
 
+        const { requestId } = req.body;
+
+        await emergencyService.cancelEmergency(requestId);
+
+        res.json({
+            success: true,
+            message: "Emergency stopped",
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            message: err.message,
+        });
+
+    }
+};
 /**
  * GET EMERGENCY STATUS
  * GET /api/emergency/status/:requestId
  */
+
 exports.getEmergencyStatus = async (req, res) => {
   try {
 

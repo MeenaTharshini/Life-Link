@@ -243,7 +243,25 @@ setNotifications(prev =>
     }
 
   }
+  async function stopEmergency(requestId) {
+  try {
+    await axios.post(
+    `${API}/api/emergency/cancel/${requestId}`
+);
 
+    alert("Emergency Broadcast Stopped");
+
+    loadRequests();
+
+  } catch (err) {
+
+    alert(
+      err.response?.data?.message ||
+      "Unable to stop emergency."
+    );
+
+  }
+}
   const urgencyClass = u => {
 
     if (u === "critical") return "critical";
@@ -502,6 +520,8 @@ key={index}
   Delete Request
 </button>
 </div>
+<div className="emergencyActions">
+
 {!req.blood_requests.emergency ? (
   <button
   className="emergencyBtn"
@@ -511,16 +531,29 @@ key={index}
   Start Emergency Broadcast
 </button>
 ) : (
-  <button
-  className="emergencyRunningBtn"
-  disabled
+  <div className="runningButtons">
+
+<button
+className="emergencyRunningBtn"
+disabled
 >
-  <CheckCircle2 size={18} />
-  Emergency Active
+    <CheckCircle2 size={18}/>
+    Emergency Active
 </button>
+
+<button
+className="stopEmergencyBtn"
+onClick={() =>
+    stopEmergency(req.blood_requests.id)
+}
+>
+    Stop Broadcast
+</button>
+
+</div>
 )}
 </div>
-
+</div>
 <button
 className="donorCountBtn"
 onClick={()=>setExpanded(
