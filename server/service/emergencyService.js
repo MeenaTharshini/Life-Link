@@ -6,36 +6,50 @@ const {
 } = require("./notificationService");
 
 /**
- * Start Emergency Broadcast
+ * START EMERGENCY BROADCAST
  */
-async function startEmergency(body) {
-  const { requestId } = body;
+async function startEmergency({ requestId }) {
 
-  // Get request
-  const { data: request, error: requestError } = await supabase
-    .from("blood_requests")
-    .select("*")
-    .eq("id", requestId)
-    .single();
+  // -----------------------------
+  // Get blood request
+  // -----------------------------
+  const { data: request, error: requestError } =
+    await supabase
+      .from("blood_requests")
+      .select("*")
+      .eq("id", requestId)
+      .single();
 
   if (requestError) throw requestError;
 
-  // Update request
-  const { error: updateError } = await supabase
-    .from("blood_requests")
-    .update({
-      emergency: true,
-      broadcast_time: new Date().toISOString(),
-    })
-    .eq("id", requestId);
+  // Already active?
+  if (request.emergency) {
+    throw new Error("Emergency already active.");
+  }
+
+  // -----------------------------
+  // Mark request as emergency
+  // -----------------------------
+  const { error: updateError } =
+    await supabase
+      .from("blood_requests")
+      .update({
+        emergency: true,
+        broadcast_time: new Date().toISOString(),
+      })
+      .eq("id", requestId);
 
   if (updateError) throw updateError;
 
+  // -----------------------------
   // Compatible blood groups
+  // -----------------------------
   const compatibleGroups =
     compatibility[request.blood_group] || [];
 
-  // Get available donors
+  // -----------------------------
+  // Available donors
+  // -----------------------------
   const { data: donors, error: donorError } =
     await supabase
       .from("donors")
@@ -45,9 +59,12 @@ async function startEmergency(body) {
 
   if (donorError) throw donorError;
 
-  // Filter nearby donors
+  // -----------------------------
+  // Find nearby donors
+  // -----------------------------
   const nearbyDonors = donors
     .map((donor) => {
+
       const distance = getDistance(
         request.latitude,
         request.longitude,
@@ -59,93 +76,135 @@ async function startEmergency(body) {
         ...donor,
         distance,
       };
+
     })
-    .filter((donor) => donor.distance <= 20) // 20 KM radius
+    .filter(donor => donor.distance <= 20)
     .sort((a, b) => a.distance - b.distance);
 
-  // Create notifications
+  // -----------------------------
+  // Create EMERGENCY notifications
+  // -----------------------------
   if (nearbyDonors.length > 0) {
+
     await createAndSendNotifications({
-      donors: nearbyDonors,
-      request,
-    });
+    donors: nearbyDonors,
+    request,
+    emergency: true,
+    popup_seen: false,
+    alarm_played: false,
+});
+
   }
 
   return {
-    notifiedDonors: nearbyDonors.length,
+
+    success: true,
+
     requestId,
+
+    emergency: true,
+
+    notifiedDonors: nearbyDonors.length,
+
   };
+
 }
 
 /**
- * Cancel Emergency
+ * CANCEL EMERGENCY
  */
 async function cancelEmergency(requestId) {
-  const { error } = await supabase
-    .from("blood_requests")
-    .update({
-  emergency: false,
-})
-    .eq("id", requestId);
+
+  const { error } =
+    await supabase
+      .from("blood_requests")
+      .update({
+        emergency: false,
+      })
+      .eq("id", requestId);
 
   if (error) throw error;
+
 }
 
 /**
- * Complete Emergency
+ * COMPLETE EMERGENCY
  */
 async function completeEmergency(requestId) {
-  const { error } = await supabase
-    .from("blood_requests")
-    .update({
-      status: "completed",
-      completed_time: new Date().toISOString(),
-      emergency: false,
-    })
-    .eq("id", requestId);
+
+  const { error } =
+    await supabase
+      .from("blood_requests")
+      .update({
+
+        emergency: false,
+
+        status: "completed",
+
+        completed_time: new Date().toISOString(),
+
+      })
+      .eq("id", requestId);
 
   if (error) throw error;
+
 }
 
 /**
- * Live Status
+ * LIVE STATUS
  */
 async function getEmergencyStatus(requestId) {
-  const { data: request, error } = await supabase
-    .from("blood_requests")
-    .select("*")
-    .eq("id", requestId)
-    .single();
+
+  const { data: request, error } =
+    await supabase
+      .from("blood_requests")
+      .select("*")
+      .eq("id", requestId)
+      .single();
 
   if (error) throw error;
 
-  const { count } = await supabase
-    .from("notifications")
-    .select("*", {
-      count: "exact",
-      head: true,
-    })
-    .eq("request_id", requestId);
+  const { count: totalNotifications } =
+    await supabase
+      .from("notifications")
+      .select("*", {
+        head: true,
+        count: "exact",
+      })
+      .eq("request_id", requestId);
 
-  const { count: accepted } = await supabase
-    .from("notifications")
-    .select("*", {
-      count: "exact",
-      head: true,
-    })
-    .eq("request_id", requestId)
-    .eq("status", "accepted");
+  const { count: acceptedDonors } =
+    await supabase
+      .from("notifications")
+      .select("*", {
+        head: true,
+        count: "exact",
+      })
+      .eq("request_id", requestId)
+      .eq("status", "accepted");
 
   return {
+
     request,
-    totalNotifications: count || 0,
-    acceptedDonors: accepted || 0,
+
+    totalNotifications: totalNotifications || 0,
+
+    acceptedDonors: acceptedDonors || 0,
+
+    emergency: request.emergency,
+
   };
+
 }
 
 module.exports = {
+
   startEmergency,
+
   cancelEmergency,
+
   completeEmergency,
+
   getEmergencyStatus,
+
 };

@@ -1,7 +1,12 @@
 const supabase = require("../supabaseClient");
 
-const createAndSendNotifications = async ({ donors, request }) => {
-  const notifications = donors.map((donor) => ({
+const createAndSendNotifications = async ({
+  donors,
+  request,
+  emergency = false,
+  popup_seen = false,
+  play_alarm = false,
+}) => {  const notifications = donors.map((donor) => ({
     donor_id: donor.id,
     request_id: request.id,
 
@@ -20,9 +25,24 @@ const createAndSendNotifications = async ({ donors, request }) => {
 
     distance: donor.distance,
 
+    emergency,
+
+    popup_seen,
+
+    play_alarm,
+
+    alarm_played: false,
+
+    expired: false,
+
+    priority: emergency ? "emergency" : request.urgency,
+
+    response_time: null,
+
     status: "pending",
+
     is_read: false,
-  }));
+}));
 
   const { data, error } = await supabase
   .from("notifications")
@@ -36,7 +56,6 @@ if (error) {
   throw error;
 }
 
-return data;
 
   return data;
 };

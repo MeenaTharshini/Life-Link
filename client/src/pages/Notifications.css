@@ -958,43 +958,186 @@ to{
 /* ==========================
    EMERGENCY BUTTON
 ========================== */
+/*========================================
+   EMERGENCY BROADCAST BUTTON
+========================================*/
 
 .emergencyBtn{
+
+    position:relative;
+
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
 
-    width:100%;
-    margin-top:18px;
+    min-width:230px;
+    height:54px;
 
-    padding:14px 20px;
+    padding:0 22px;
 
     border:none;
-    border-radius:14px;
+    border-radius:16px;
 
     cursor:pointer;
+
+    overflow:hidden;
+
+    color:#fff;
 
     font-size:15px;
     font-weight:700;
     letter-spacing:.4px;
 
-    color:#fff;
-
-    background:linear-gradient(
+    background:
+    linear-gradient(
         135deg,
-        #ef4444,
-        #dc2626,
-        #991b1b
+        #ff4d4f 0%,
+        #dc2626 50%,
+        #991b1b 100%
     );
 
     box-shadow:
-        0 8px 22px rgba(239,68,68,.35);
+        0 12px 30px rgba(220,38,38,.35);
 
-    transition:.3s ease;
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 
-    overflow:hidden;
-    position:relative;
+    animation:
+        emergencyPulse 2.5s infinite;
+}
+
+
+/* glossy shine */
+
+.emergencyBtn::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-120%;
+
+    top:0;
+
+    width:70%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.35),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    transition:.8s;
+
+}
+
+
+.emergencyBtn:hover::before{
+
+    left:150%;
+
+}
+
+
+.emergencyBtn:hover{
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 18px 40px rgba(220,38,38,.45);
+
+}
+
+
+.emergencyBtn:active{
+
+    transform:scale(.97);
+
+}
+
+
+.emergencyBtn svg{
+
+    width:20px;
+    height:20px;
+
+}
+
+
+/*========================================
+      EMERGENCY ACTIVE
+========================================*/
+
+.emergencyRunningBtn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    min-width:230px;
+    height:54px;
+
+    padding:0 22px;
+
+    border:none;
+    border-radius:16px;
+
+    cursor:not-allowed;
+
+    color:#fff;
+
+    font-size:15px;
+    font-weight:700;
+
+    background:
+    linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+
+    box-shadow:
+        0 10px 25px rgba(22,163,74,.35);
+
+}
+
+
+/*========================================
+      PULSE ANIMATION
+========================================*/
+
+@keyframes emergencyPulse{
+
+0%{
+
+    box-shadow:
+    0 0 0 0 rgba(220,38,38,.55);
+
+}
+
+70%{
+
+    box-shadow:
+    0 0 0 14px rgba(220,38,38,0);
+
+}
+
+100%{
+
+    box-shadow:
+    0 0 0 0 rgba(220,38,38,0);
+
+}
+
 }
 
 .emergencyBtn::before{

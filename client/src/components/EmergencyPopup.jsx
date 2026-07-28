@@ -16,7 +16,15 @@ export default function EmergencyPopup({
   onAccept,
   onClose,
 }) {
+
+  // Countdown state
   const [seconds, setSeconds] = useState(60);
+
+  // Reset timer whenever a new emergency arrives
+  useEffect(() => {
+    if (!notification) return;
+    setSeconds(60);
+  }, [notification]);
 
   // Countdown Timer
   useEffect(() => {
@@ -34,23 +42,7 @@ export default function EmergencyPopup({
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [notification]);
-
-  // Alarm Sound
-  useEffect(() => {
-    if (!notification) return;
-
-    const audio = new Audio("/sounds/emergency.mp3");
-
-    audio.loop = true;
-
-    audio.play().catch(() => {});
-
-    return () => {
-      audio.pause();
-      audio.currentTime = 0;
-    };
-  }, [notification]);
+  }, [notification, onClose]);
 
   if (!notification) return null;
 
@@ -66,7 +58,6 @@ export default function EmergencyPopup({
         </button>
 
         <div className="popup-header">
-
           <AlertTriangle
             size={42}
             className="danger-icon"
@@ -77,24 +68,18 @@ export default function EmergencyPopup({
           <p>
             Nearby patient requires immediate blood.
           </p>
-
         </div>
 
         <div className="timer-circle">
-
           <Clock3 size={28} />
-
           <span>{seconds}s</span>
-
         </div>
 
         <div className="popup-info">
 
           <div className="row">
             <Droplets size={18} />
-            <strong>
-              Blood Group:
-            </strong>
+            <strong>Blood Group:</strong>
             {notification.blood_group}
           </div>
 

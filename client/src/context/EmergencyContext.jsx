@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
@@ -13,13 +14,53 @@ const EmergencyContext = createContext();
 export function EmergencyProvider({ children }) {
   const { donor } = useAuth();
 
-  const [emergencyNotification, setEmergencyNotification] =
-    useState(null);
+  const [activeEmergency, setActiveEmergency] = useState(null);
+
+  const [alarmPlaying, setAlarmPlaying] = useState(false);
+
+  const audioRef = useRef(null);
+
+  /*
+  ---------------------------------------
+  Start Alarm
+  ---------------------------------------
+  */
+  const startAlarm = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current.loop = true;
+
+    audioRef.current.play().catch(() => {
+      console.log("Autoplay blocked.");
+    });
+
+    setAlarmPlaying(true);
+  };
+
+  /*
+  ---------------------------------------
+  Stop Alarm
+  ---------------------------------------
+  */
+  const stopAlarm = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current.pause();
+
+    audioRef.current.currentTime = 0;
+
+    setAlarmPlaying(false);
+  };
+
+  /*
+  ---------------------------------------
+  Listen for Emergency Notifications
+  ---------------------------------------
+  */
 
   useEffect(() => {
     if (!donor) return;
 
-    // Listen for NEW emergency notifications
     const channel = supabase
       .channel(`emergency-${donor.id}`)
       .on(
@@ -30,24 +71,31 @@ export function EmergencyProvider({ children }) {
           table: "notifications",
           filter: `donor_id=eq.${donor.id}`,
         },
-        (payload) => {
+        async (payload) => {
           const notification = payload.new;
 
-          // Show popup only for emergency notifications
-          if (
-  notification.emergency &&
-  !notification.popup_seen
-){
-            setEmergencyNotification(notification);
+          /*
+          Ignore normal notifications
+          */
 
-            // Mark popup shown
-            supabase
-              .from("notifications")
-              .update({
-                popup_seen: true,
-              })
-              .eq("id", notification.id);
-          }
+          if (!notification.emergency) return;
+
+          /*
+          Already shown?
+          */
+
+          if (notification.popup_seen) return;
+
+          setActiveEmergency(notification);
+
+          startAlarm();
+
+          await supabase
+            .from("notifications")
+            .update({
+              popup_seen: true,
+            })
+            .eq("id", notification.id);
         }
       )
       .subscribe();
@@ -57,18 +105,38 @@ export function EmergencyProvider({ children }) {
     };
   }, [donor]);
 
+  /*
+  ---------------------------------------
+  Close Emergency Popup
+  ---------------------------------------
+  */
+
   const closeEmergency = () => {
-    setEmergencyNotification(null);
+    stopAlarm();
+
+    setActiveEmergency(null);
   };
 
   return (
     <EmergencyContext.Provider
       value={{
-        emergencyNotification,
-        setEmergencyNotification,
+        activeEmergency,
+        setActiveEmergency,
+
+        alarmPlaying,
+
+        startAlarm,
+        stopAlarm,
+
         closeEmergency,
       }}
     >
+      <audio
+        ref={audioRef}
+        src="/sounds/emergency.wav"
+        preload="auto"
+      />
+
       {children}
     </EmergencyContext.Provider>
   );

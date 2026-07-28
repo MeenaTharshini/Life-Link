@@ -18,9 +18,14 @@ import {
   Trash2,
   User,
   Syringe,
+  Siren,
+  Radio,
+  Activity,
+  ShieldAlert,
 } from "lucide-react";
 import { useEmergency } from "../context/EmergencyContext";
 import "./Notifications.css";
+import EmergencyPopup from "../components/EmergencyPopup";
 const API = import.meta.env.VITE_API_URL;
 export default function Notifications() {
 
@@ -31,7 +36,10 @@ export default function Notifications() {
   setNotificationCount,
 } = useAuth();
 
-const { closeEmergency } = useEmergency();
+const {
+  activeEmergency,
+  closeEmergency,
+} = useEmergency();
 
 const userId = profile?.id;
 const donorId = donor?.id;
@@ -58,7 +66,29 @@ const donorId = donor?.id;
     loadRequests();
   }
 }, [donor, profile]);
+  useEffect(() => {
+  if (!donor) return;
 
+  const channel = supabase
+    .channel(`notification-refresh-${donor.id}`)
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "notifications",
+        filter: `donor_id=eq.${donor.id}`,
+      },
+      () => {
+        loadNotifications();
+      }
+    )
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, [donor]);
   
   async function loadNotifications() {
   console.log("loadNotifications called");
@@ -185,11 +215,9 @@ await supabase
 })
 .eq("id", notification.id);
 
-setNotificationCount(0);
-
-// Remove one unread notification
 setNotificationCount((prev) => Math.max(prev - 1, 0));
 
+loadNotifications();
 // Close emergency popup if it is open
 closeEmergency();
 
@@ -476,18 +504,20 @@ key={index}
 </div>
 {!req.blood_requests.emergency ? (
   <button
-    className="emergencyBtn"
-    onClick={() => startEmergency(req.blood_requests.id)}
-  >
-    🚨 Start Emergency Broadcast
-  </button>
+  className="emergencyBtn"
+  onClick={() => startEmergency(req.blood_requests.id)}
+>
+  <Siren size={18} />
+  Start Emergency Broadcast
+</button>
 ) : (
   <button
-    className="emergencyRunningBtn"
-    disabled
-  >
-    🚨 Emergency Active
-  </button>
+  className="emergencyRunningBtn"
+  disabled
+>
+  <CheckCircle2 size={18} />
+  Emergency Active
+</button>
 )}
 </div>
 
@@ -580,7 +610,11 @@ onClick={()=>setShowRequests(false)}
 ></div>
 
 }
-
+<EmergencyPopup
+  notification={activeEmergency}
+  onAccept={acceptDonation}
+  onClose={closeEmergency}
+/>
 </div>
 
   );
