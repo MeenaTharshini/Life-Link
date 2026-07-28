@@ -4,7 +4,7 @@ const emergencyService = require("../service/emergencyService");
  * Start Emergency Broadcast
  * POST /api/emergency/start
  */
-exports.activateEmergency = async (req,res)=>{
+exports.startEmergency = async (req,res)=>{
   try {
     const result = await emergencyService.startEmergency(req.body);
 

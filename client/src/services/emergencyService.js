@@ -7,7 +7,10 @@ const API = import.meta.env.VITE_API_URL;
  */
 export const activateEmergency = async (requestId) => {
   const res = await axios.post(
-    `${API}/api/emergency/activate/${requestId}`
+    `${API}/api/emergency/start`,
+    {
+      requestId
+    }
   );
 
   return res.data;

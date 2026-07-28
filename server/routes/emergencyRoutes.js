@@ -3,7 +3,6 @@ const router = express.Router();
 
 const {
   startEmergency,
-  activateEmergency,
   completeEmergency,
   getEmergencyStatus,
 } = require("../controllers/emergencyController");
@@ -14,7 +13,6 @@ router.post("/start", startEmergency);
 
 
 // Existing routes
-router.post("/activate/:requestId", activateEmergency);
 
 router.post("/complete/:requestId", completeEmergency);
 
