@@ -202,6 +202,52 @@ router.put("/donating/:id", async (req, res) => {
   }
 });
 /* ======================
+   DONATION COMPLETED
+====================== */
+router.put("/complete/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("notifications")
+      .update({
+        status: "completed",
+        completed_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .eq("status", "donating")
+      .select()
+      .single();
+
+    if (error) {
+      console.error("COMPLETION ERROR:", error);
+
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
+
+    if (!data) {
+      return res.status(400).json({
+        error: "Donation must be in progress before completing it.",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Donation completed successfully.",
+      data,
+    });
+
+  } catch (err) {
+    console.error("COMPLETION ERROR:", err);
+
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+/* ======================
    BROADCAST (OPTIONAL MANUAL)
 ====================== */
 router.post("/broadcast", async (req, res) => {

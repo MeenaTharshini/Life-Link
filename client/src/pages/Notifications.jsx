@@ -523,11 +523,11 @@ className={`notification-card ${urgencyClass(n.urgency)}`}
 
 {n.status === "donating" && (
   <button
-    className="donating-status-btn"
-    disabled
+    className="complete-btn"
+    onClick={() => completeDonation(n)}
   >
-    <Activity size={17} />
-    Donation in Progress
+    <CheckCircle2 size={17} />
+    Confirm Donation Completed
   </button>
 )}
 
