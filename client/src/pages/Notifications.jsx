@@ -171,78 +171,110 @@ setAcceptedCount(totalAccepted);
 
   }
 }
-  async function startEmergency(requestId) {
+
+async function acceptDonation(notification) {
   try {
-    const res = await axios.post(
-      `${API}/api/emergency/start`,
-      {
-        requestId,
-      }
+    const res = await axios.put(
+      `${API}/api/notifications/accept/${notification.id}`
     );
 
-    alert(
-      `Emergency Broadcast Started!\n${res.data.data.notifiedDonors} donors notified.`
+    console.log("ACCEPTED:", res.data);
+
+    setNotificationCount((prev) => Math.max(prev - 1, 0));
+
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === notification.id
+          ? {
+              ...item,
+              status: "accepted",
+              is_read: true,
+              accepted_at: new Date().toISOString(),
+            }
+          : item
+      )
     );
 
-    loadRequests();
+    closeEmergency();
 
   } catch (err) {
-    console.log("Emergency Error:", err.response?.data);
+    console.error(
+      "ACCEPT ERROR:",
+      err.response?.data || err
+    );
 
     alert(
-      err.response?.data?.message ||
-      "Unable to start emergency."
+      err.response?.data?.error ||
+      "Unable to accept this request."
     );
   }
 }
-  async function acceptDonation(notification) {
-    
-    try {
 
-      await axios.post(
-  `${API}/api/responses/accept`,
-  {
-    donor_id: donor.id,
-    request_id: notification.request_id,
-    distance: notification.distance,
+async function markArrived(notification) {
+  try {
+    const res = await axios.put(
+      `${API}/api/notifications/arrive/${notification.id}`
+    );
+
+    console.log("ARRIVED:", res.data);
+
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === notification.id
+          ? {
+              ...item,
+              status: "arrived",
+              arrived_at: new Date().toISOString(),
+            }
+          : item
+      )
+    );
+
+  } catch (err) {
+    console.error(
+      "ARRIVAL ERROR:",
+      err.response?.data || err
+    );
+
+    alert(
+      err.response?.data?.error ||
+      "Unable to record your arrival."
+    );
   }
-);
-await supabase
-.from("notifications")
-.update({
-  is_read: true,
-  status: "accepted",
-})
-.eq("id", notification.id);
+}
 
-setNotificationCount((prev) => Math.max(prev - 1, 0));
+async function startDonation(notification) {
+  try {
+    const res = await axios.put(
+      `${API}/api/notifications/donating/${notification.id}`
+    );
 
-loadNotifications();
-// Close emergency popup if it is open
-closeEmergency();
+    console.log("DONATION STARTED:", res.data);
 
-setNotifications(prev =>
-  prev.map(item =>
-    item.id === notification.id
-      ? {
-          ...item,
-          status:"accepted",
-          is_read:true
-        }
-      : item
-  )
-);
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === notification.id
+          ? {
+              ...item,
+              status: "donating",
+              donating_at: new Date().toISOString(),
+            }
+          : item
+      )
+    );
 
-    } catch (err) {
-      console.log(
-    "ACCEPT ERROR:",
-    err.response?.data
-  );
-      alert(err.response?.data?.error || "Unable to accept");
+  } catch (err) {
+    console.error(
+      "DONATION START ERROR:",
+      err.response?.data || err
+    );
 
-    }
-
+    alert(
+      err.response?.data?.error ||
+      "Unable to start donation."
+    );
   }
+}
   async function stopEmergency(requestId) {
   try {
     await axios.post(
@@ -407,31 +439,76 @@ className={`notification-card ${urgencyClass(n.urgency)}`}
 
 </div>
 
-{n.status==="accepted"?
+{n.status === "pending" && (
+  <button
+    className="accept-btn"
+    onClick={() => acceptDonation(n)}
+  >
+    <CheckCircle2 size={17} />
+    I'll Donate
+  </button>
+)}
 
-<button
-disabled
-className="accepted-btn"
->
+{n.status === "accepted" && (
+  <div className="status-action">
+    <button
+      className="accepted-btn"
+      disabled
+    >
+      <CheckCircle2 size={17} />
+      Request Accepted
+    </button>
 
-Accepted
+    <button
+      className="arrived-btn"
+      onClick={() => markArrived(n)}
+    >
+      <MapPin size={17} />
+      I'm Here
+    </button>
+  </div>
+)}
 
-</button>
+{n.status === "arrived" && (
+  <div className="status-action">
+    <button
+      className="arrived-status-btn"
+      disabled
+    >
+      <CheckCircle2 size={17} />
+      Arrival Confirmed
+    </button>
 
-:
+    <button
+      className="donating-btn"
+      onClick={() => startDonation(n)}
+    >
+      <Droplets size={17} />
+      Start Donation
+    </button>
+  </div>
+)}
 
-<button
-className="accept-btn"
-onClick={()=>acceptDonation(n)}
->
+{n.status === "donating" && (
+  <button
+    className="donating-status-btn"
+    disabled
+  >
+    <Activity size={17} />
+    Donation in Progress
+  </button>
+)}
 
-<CheckCircle2 size={17}/>
+{n.status === "completed" && (
+  <button
+    className="completed-btn"
+    disabled
+  >
+    <CheckCircle2 size={17} />
+    Donation Verified
+  </button>
+)}
 
-I'll Donate
-
-</button>
-
-}
 
 </div>
 
