@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const profileRoutes = require("./routes/profileRoutes");
-const emergencyRoutes = require("./routes/emergencyRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -24,14 +23,7 @@ app.use("/api/requests", require("./routes/requestRoutes"));
 app.use("/api/notifications", require("./routes/notificationRoutes"));
 app.use("/api/responses", require("./routes/responseRoutes"));
 app.use("/api/dashboard", require("./routes/dashboardRoutes"));
-app.get("/test-emergency", (req,res)=>{
-  res.json({
-    message:"Emergency test route working"
-  });
-});
 
-
-app.use("/api/emergency", emergencyRoutes);
 app.get("/", (req, res) => {
   res.send("Life-Link Server Running");
 });

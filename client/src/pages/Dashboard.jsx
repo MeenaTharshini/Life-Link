@@ -9,10 +9,8 @@ import {
   ShieldCheck,
   Activity,
 } from "lucide-react";
-import EmergencyPopup from "../components/EmergencyPopup";
 import { useAuth } from "../context/AuthContext";
 import "./Dashboard.css";
-import { useEmergency } from "../context/EmergencyContext";
 
 function Dashboard() {
   const navigate = useNavigate();
