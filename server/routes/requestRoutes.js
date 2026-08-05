@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const supabase = require("../supabaseClient");
-const getDistance = require("../utils/distance");
 const { createAndSendNotifications } = require("../service/notificationService");
-const compatibility = require("../utils/compatibility");
-
+const { findMatchingDonors } = require("../utils/donorMatcher");
 router.post("/create", async (req, res) => {
   const {
     hospital_id,
@@ -56,20 +54,15 @@ if (donorError) {
   return res.status(500).json({ error: donorError.message });
 }
 
-  const valid = donors
-  .filter(d => compatibility[blood_group]?.includes(d.blood_group))
-.filter(d => String(d.user_id) !== String(hospital_id))
-  .map(d => ({
-    ...d,
-    distance: getDistance(
-      latitude,
-      longitude,
-      d.latitude,
-      d.longitude
-    ),
-  }))
-  .filter(d => d.distance <= 10)
-  .slice(0, 20);
+  const valid = findMatchingDonors({
+  donors,
+  bloodGroup: blood_group,
+  latitude,
+  longitude,
+  urgency,
+  requesterId: hospital_id,
+  requiredDonors: Math.max(5, Number(units) * 3),
+});
 
   const requestWithRequester = {
     ...request,

@@ -13,7 +13,7 @@ export const activateEmergency = async (requestId) => {
         requestId,
       }
     );
-
+    console.log(request);
     return res.data;
   } catch (err) {
     throw (
@@ -53,7 +53,7 @@ export const completeEmergency = async (requestId) => {
     const res = await axios.post(
       `${API}/api/emergency/complete/${requestId}`
     );
-
+    console.log(request);
     return res.data;
   } catch (err) {
     throw (
