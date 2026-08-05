@@ -28,12 +28,13 @@ function CreateRequest() {
   const [sending, setSending] = useState(false);
   const [address, setAddress] = useState("");
 
-  const getLocation = () => {
+
+const getLocation = () => {
   setLoadingLoc(true);
+  setMsg("");
 
   navigator.geolocation.getCurrentPosition(
     async (pos) => {
-
       const lat = pos.coords.latitude;
       const lng = pos.coords.longitude;
 
@@ -43,32 +44,48 @@ function CreateRequest() {
       });
 
       try {
+        // Get the application's current language.
+        // Change this key if your app uses a different localStorage key.
+        const selectedLanguage =
+          localStorage.getItem("language") || "en";
+
+        // Only allow the languages your application supports.
+        const language =
+          selectedLanguage === "ta" ? "ta" : "en";
 
         const res = await axios.get(
-          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+          "https://nominatim.openstreetmap.org/reverse",
+          {
+            params: {
+              format: "jsonv2",
+              lat,
+              lon: lng,
+              "accept-language": language,
+            },
+          }
         );
 
-        setAddress(res.data.display_name);
+        setAddress(
+          res.data.display_name || "Location unavailable"
+        );
 
-      } catch {
-
+      } catch (error) {
+        console.error("LOCATION ERROR:", error);
         setAddress("Location unavailable");
-
       }
 
       setLoadingLoc(false);
-
     },
 
-    () => {
+    (error) => {
+      console.error("GEOLOCATION ERROR:", error);
 
       setMsg("Location permission denied");
-
       setLoadingLoc(false);
-
     }
   );
 };
+
 
   const submitRequest = async () => {
   if (!form.blood_group || !location) {

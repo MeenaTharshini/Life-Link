@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { HeartPulse } from "lucide-react";
+import { HeartHandshake } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
@@ -56,7 +56,7 @@ function Login() {
       <div className="auth-card">
 
         <div className="auth-logo">
-          <HeartPulse
+          <HeartHandshake
             size={48}
             strokeWidth={2.5}
           />

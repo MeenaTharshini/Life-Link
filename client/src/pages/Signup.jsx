@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import supabase from "../lib/supabaseClient";
 import axios from "axios";
 import {
-  HeartPulse,
+  HeartHandshake,
   LocateFixed,
   MapPin,
   AlertTriangle,
@@ -165,7 +165,7 @@ function Signup() {
     <div className="auth-card">
 
       <div className="auth-logo">
-        <HeartPulse
+        <HeartHandshake
           size={48}
           strokeWidth={2.5}
         />
