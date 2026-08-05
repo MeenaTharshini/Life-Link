@@ -111,49 +111,7 @@ router.put("/accept/:id", async (req, res) => {
 /* ======================
    DONATION STARTED
 ====================== */
-router.put("/donating/:id", async (req, res) => {
-  const { id } = req.params;
 
-  try {
-    const { data, error } = await supabase
-      .from("notifications")
-      .update({
-        status: "donating",
-        donating_at: new Date().toISOString(),
-      })
-      .eq("id", id)
-      .eq("status", "arrived")
-      .select()
-      .single();
-
-    if (error) {
-      console.error("DONATING ERROR:", error);
-
-      return res.status(500).json({
-        error: error.message,
-      });
-    }
-
-    if (!data) {
-      return res.status(400).json({
-        error: "You must check in before starting the donation.",
-      });
-    }
-
-    res.json({
-      success: true,
-      message: "Donation started.",
-      data,
-    });
-
-  } catch (err) {
-    console.error("DONATING ERROR:", err);
-
-    res.status(500).json({
-      error: err.message,
-    });
-  }
-});
 /* ======================
    DONOR ARRIVED
 ====================== */
@@ -194,6 +152,49 @@ router.put("/arrive/:id", async (req, res) => {
 
   } catch (err) {
     console.error("ARRIVAL ERROR:", err);
+
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
+router.put("/donating/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const { data, error } = await supabase
+      .from("notifications")
+      .update({
+        status: "donating",
+        donating_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .eq("status", "arrived")
+      .select()
+      .single();
+
+    if (error) {
+      console.error("DONATING ERROR:", error);
+
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
+
+    if (!data) {
+      return res.status(400).json({
+        error: "You must check in before starting the donation.",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Donation started.",
+      data,
+    });
+
+  } catch (err) {
+    console.error("DONATING ERROR:", err);
 
     res.status(500).json({
       error: err.message,
