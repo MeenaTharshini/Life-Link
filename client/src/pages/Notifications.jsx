@@ -275,6 +275,38 @@ async function startDonation(notification) {
     );
   }
 }
+async function completeDonation(notification) {
+  try {
+    const res = await axios.put(
+      `${API}/api/notifications/complete/${notification.id}`
+    );
+
+    console.log("DONATION COMPLETED:", res.data);
+
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === notification.id
+          ? {
+              ...item,
+              status: "completed",
+              completed_at: new Date().toISOString(),
+            }
+          : item
+      )
+    );
+
+  } catch (err) {
+    console.error(
+      "COMPLETION ERROR:",
+      err.response?.data || err
+    );
+
+    alert(
+      err.response?.data?.error ||
+      "Unable to complete donation."
+    );
+  }
+}
   async function stopEmergency(requestId) {
   try {
     await axios.post(
