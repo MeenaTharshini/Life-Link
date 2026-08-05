@@ -1321,3 +1321,404 @@ to{
 }
 
 }
+/* ==========================
+   I'M HERE / ARRIVED BUTTON
+========================== */
+
+.arrived-btn {
+  width: 100%;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 14px 18px;
+
+  background: linear-gradient(
+    135deg,
+    #ff4d4f,
+    #dc2626
+  );
+
+  color: #ffffff;
+
+  border: none;
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.30);
+
+  transition: all 0.25s ease;
+}
+
+.arrived-btn:hover {
+  transform: translateY(-2px);
+
+  background: linear-gradient(
+    135deg,
+    #ff4d4f,
+    #dc2626
+  );
+
+  box-shadow:
+    0 12px 28px rgb(245, 73, 20);
+}
+
+.arrived-btn:active {
+  transform: scale(0.97);
+}
+
+.arrived-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .arrived-btn {
+    width: 100%;
+    padding: 13px 16px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   DONATION WORKFLOW BUTTONS
+   ========================================================= */
+
+/* ==========================
+   I'M HERE / ARRIVED BUTTON
+   ========================== */
+
+.arrived-btn {
+    width: 100%;
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 14px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(37, 99, 235, 0.30);
+
+    transition: all 0.25s ease;
+}
+
+.arrived-btn:hover {
+    transform: translateY(-2px);
+
+    background: linear-gradient(
+        135deg,
+        #3b82f6,
+        #2563eb
+    );
+
+    box-shadow:
+        0 12px 28px rgba(37, 99, 235, 0.45);
+}
+
+.arrived-btn:active {
+    transform: scale(0.97);
+}
+
+.arrived-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   START DONATION BUTTON
+   ========================================================= */
+
+.donating-btn {
+    width: 100%;
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 14px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #06b6d4,
+        #0891b2
+    );
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(6, 182, 212, 0.30);
+
+    transition: all 0.25s ease;
+}
+
+.donating-btn:hover {
+    transform: translateY(-2px);
+
+    background: linear-gradient(
+        135deg,
+        #22d3ee,
+        #06b6d4
+    );
+
+    box-shadow:
+        0 12px 28px rgba(6, 182, 212, 0.45);
+}
+
+.donating-btn:active {
+    transform: scale(0.97);
+}
+
+.donating-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CONFIRM DONATION COMPLETED BUTTON
+   ========================================================= */
+
+.complete-btn {
+    width: 100%;
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 14px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(22, 163, 74, 0.30);
+
+    transition: all 0.25s ease;
+}
+
+.complete-btn:hover {
+    transform: translateY(-2px);
+
+    background: linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+
+    box-shadow:
+        0 12px 28px rgba(22, 163, 74, 0.45);
+}
+
+.complete-btn:active {
+    transform: scale(0.97);
+}
+
+.complete-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   DONATION VERIFIED / COMPLETED BUTTON
+   ========================================================= */
+
+.completed-btn {
+    width: 100%;
+    margin-top: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 14px 18px;
+
+    background: rgba(34, 197, 94, 0.12);
+
+    color: #4ade80;
+
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: default;
+
+    box-shadow:
+        0 8px 20px rgba(34, 197, 94, 0.12);
+}
+
+.completed-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   GENERAL WORKFLOW BUTTON EFFECT
+   ========================================================= */
+
+.arrived-btn,
+.donating-btn,
+.complete-btn,
+.completed-btn {
+    min-height: 50px;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .arrived-btn,
+    .donating-btn,
+    .complete-btn,
+    .completed-btn {
+        width: 100%;
+        padding: 13px 16px;
+        font-size: 14px;
+    }
+}
+/* =========================================
+   ARRIVAL CONFIRMED / ARRIVED STATUS
+   ========================================= */
+
+.arrival-confirmed {
+  width: 100%;
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 14px 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.18),
+    rgba(22, 163, 74, 0.12)
+  );
+
+  color: #4ade80;
+
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  border-radius: 14px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  box-shadow:
+    0 8px 20px rgba(34, 197, 94, 0.15);
+
+  animation: arrivalConfirmed 0.4s ease;
+}
+
+.arrival-confirmed svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+}
+
+/* Small success indicator */
+.arrival-confirmed::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+
+  background: #22c55e;
+  border-radius: 50%;
+
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+}
+
+/* =========================================
+   ARRIVAL ANIMATION
+   ========================================= */
+
+@keyframes arrivalConfirmed {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+  .arrival-confirmed {
+    padding: 13px 16px;
+    font-size: 14px;
+  }
+}

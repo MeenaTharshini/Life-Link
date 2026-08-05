@@ -217,17 +217,16 @@ async function markArrived(notification) {
       )
     );
 
-  } catch (err) {
-    console.error(
-      "ARRIVAL ERROR:",
-      err.response?.data || err
-    );
+  }  catch (err) {
+  console.error("ARRIVAL ERROR STATUS:", err.response?.status);
+  console.error("ARRIVAL ERROR DATA:", err.response?.data);
+  console.error("ARRIVAL ERROR MESSAGE:", err.message);
 
-    alert(
-      err.response?.data?.error ||
-      "Unable to record your arrival."
-    );
-  }
+  alert(
+    err.response?.data?.error ||
+    "Unable to record your arrival."
+  );
+}
 }
 
 async function startDonation(notification) {
@@ -471,23 +470,20 @@ className={`notification-card ${urgencyClass(n.urgency)}`}
 )}
 
 {n.status === "arrived" && (
-  <div className="status-action">
-    <button
-      className="arrived-status-btn"
-      disabled
-    >
-      <CheckCircle2 size={17} />
-      Arrival Confirmed
-    </button>
+  <>
+    <div className="arrival-confirmed">
+      <CheckCircle2 size={18} />
+      <span>Arrival Confirmed</span>
+    </div>
 
     <button
       className="donating-btn"
       onClick={() => startDonation(n)}
     >
-      <Droplets size={17} />
+      <Droplets size={18} />
       Start Donation
     </button>
-  </div>
+  </>
 )}
 
 {n.status === "donating" && (
@@ -496,7 +492,7 @@ className={`notification-card ${urgencyClass(n.urgency)}`}
     onClick={() => completeDonation(n)}
   >
     <CheckCircle2 size={17} />
-    Confirm Donation Completed
+    Click to Confirm Donation Completed
   </button>
 )}
 
